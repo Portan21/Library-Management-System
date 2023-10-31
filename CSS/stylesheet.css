@@ -90,6 +90,33 @@ a, .remember{
         background-color: #ffffff;
         height: 70vh;
     }
+
+    .input-username, .input-password{
+        border: 2px solid gray;
+        border-radius: 20px;
+        width: 200px;
+        padding-left: 10px;
+        height: 25px;
+    }
+
+    .login-button{
+        border: 2px solid transparent;
+        border-radius: 20px;
+        width: 200px;
+        height: 45px;
+        margin-top: 4%;
+        background-color: #d6eeff;
+    }
+
+    .format-remember{
+        display: inline;
+    }
+
+    .checkbox{
+        margin-top: 4%;
+        margin-left: 23%;
+    }
+
   }
   
 
