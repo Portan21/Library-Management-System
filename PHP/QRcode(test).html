@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="../CSS/login.css">
+    <script defer src="../JavaScript/bootstrap.bundle.min.js"></script>
+    <script defer src="../JavaScript/qrcode(test).js"></script>
+    <title>Login</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row login">
+            <div class="login-side col-lg-3">
+            </div>
+            <div class="login-form col-lg-6 rounded-5 border-0 shadow">
+                <div class="col-lg-8 login-frame">
+                    <img src="" id="qrcode">
+                </div>
+                <div>
+                    <p>Enter Text</p>
+                    <input type="text" id="qrtext">
+                </div>
+                <button onclick="generateQR()">Generate QR Code</button>
+            </div>
+            <div class="login-side col-lg-3">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
