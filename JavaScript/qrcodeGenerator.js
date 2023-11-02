@@ -1,5 +1,6 @@
-var qrText = document.getElementById('qrtext');
+var qrText = document.getElementById('qr-name').innerHTML;
 
-qrcode.src="https://api.qrserver.com/v1/create-qr-code/?size=[250]x[250]&data=" + "INSERT NAME IN qrText.value.png";
+
+qrcode.src="https://api.qrserver.com/v1/create-qr-code/?size=[250]x[250]&data=" + qrText;
 
 
