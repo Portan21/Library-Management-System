@@ -4,27 +4,27 @@
     width: 100vw;
 }
 
-.login-container{
+.profile-container{
     width: 100%;
     padding: 4%;
     padding-left: 2%;
     display: flex;
 }
 
-.login-form{
+.profile-form{
     background-color: #ffffff;
     height: 40vh;
 }
 
-.login-form-left{
+.profile-form-left{
     margin-right: 1%;
 }
 
-.login-form-right{
+.profile-form-right{
     margin-left: 1%;
 }
 
-.login-frame{
+.profile-frame{
     padding-left: 7%;    
 }
 
@@ -47,26 +47,26 @@
         width: 100vw;
     }
 
-    .login-container{
+    .profile-container{
         height: auto;
         width: 100%;
         padding: 4%;
         display: block;
     }
 
-    .login-container-top{
+    .profile-container-top{
         padding-bottom: 4%!important;
     }
 
-    .login-form{
+    .profile-form{
         background-color: #ffffff;
     }
 
-    .login-form-left{
+    .profile-form-left{
         margin-right: 0;
     }
 
-    .login-form-right{
+    .profile-form-right{
         margin-left: 0;
         margin-top: 4%;
     }
