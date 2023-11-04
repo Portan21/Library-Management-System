@@ -34,6 +34,10 @@
     padding-top: 3%;
 }
 
+.attendance{
+    margin-left: 3%;
+}
+
 .static-text{
     padding-left: 15%;
     font-weight: 700;
@@ -57,9 +61,8 @@
 
 .qr-text{
     margin: 0;
-    margin-top: 4%;
     padding: 0;
-    padding-top: 4%;
+    padding-top: 2%;
 }
 
 .qr-frame{
@@ -68,7 +71,7 @@
 }
 
 .qr-image{
-    margin-top: 4%;
+    margin-top: 2%;
 }
 
 .download-container{
@@ -80,7 +83,7 @@
     border-radius: 20px;
     width: 350px;
     height: 45px;
-    margin-top: 4%;
+    margin-top: 12%;
     padding-left: 20px;
     padding-right: 20px;
     background-color: #d6eeff;
@@ -109,6 +112,29 @@ a{
         height: 45px;
         margin-top: 4%;
         background-color: #d6eeff;
+    }
+
+    .overview-row{
+        width: auto;
+        display: flex;
+    }
+
+    .profile-frame{
+        padding-left: 4%;    
+    }
+
+    .static-text{
+        padding: 0;
+        font-size: 14px;
+    }
+
+    .static-info{
+        width: 30vw;
+    }
+
+    .dynamic-info{
+        width: 60vw;
+        font-size: 14px;
     }
 }
   
