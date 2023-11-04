@@ -25,6 +25,36 @@
                                 <p class="static-text">Name</p>
                                 <p class="static-text">Username</p>
                                 <p class="static-text">ID Number</p>
+                                <a href='#' class='download-button'>
+                                <input class="download-button format" type="submit" value="View QR">
+                                </a>
+                                <div id="myModal" class="modal2">
+                                    <div class="modal-content2">
+                                        <span class="close" id="closeModal">&times;</span>
+
+                                        <div class="row qr-text d-flex justify-content-center">
+                                            <div class="col-lg-12 d-flex justify-content-center">
+                                                <p id="qr-name" class="qr-sign"><?php echo $_SESSION["first_name"], " " ,$_SESSION["last_name"]; ?></p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row qr-image d-flex justify-content-center">
+                                            <div class="col-lg-3 d-flex justify-content-center">
+                                                <img src="" id="qrcode">
+                                            </div>
+                                        </div>
+
+                                        <!-- Borrow button with ID for styling -->
+                                        <a download href="https://api.qrserver.com/v1/create-qr-code/?size=[250]x[250]&data=<?php echo $_SESSION["first_name"], " " ,
+                                        $_SESSION["last_name"]; ?>&download=1">
+                                        <input id="borrow-button" class="download-button format" type="submit" value="DOWNLOAD QR">
+                                        </a>
+                                    
+                                        <!-- Remove button with ID for styling 
+                                        <button id="remove-button">Remove</button>-->
+                                  
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-lg-8">
                                 <p>Name</p>

@@ -30,7 +30,7 @@ if(isset($_POST["login"])){
     <link rel="stylesheet" href="../CSS/bootstrap.min.css">
     <link rel="stylesheet" href="../CSS/profile.css">
     <script defer src="../JavaScript/bootstrap.bundle.min.js"></script>
-    <script defer src="../JavaScript/javascript.js"></script>
+    <script defer src="../JavaScript/profile.js"></script>
     <title>Profile</title>
 </head>
 <body>
@@ -49,6 +49,40 @@ if(isset($_POST["login"])){
                                 <p class="static-text">Name</p>
                                 <p class="static-text">Username</p>
                                 <p class="static-text">ID Number</p>
+                                <div class="col-lg-3">
+                                <a href='#'>
+                                <input class="view-button format" type="submit" value="View QR">
+                                </a>
+                                </div>
+                                <div id="myModal" class="modal2">
+                                    <div class="modal-content2">
+                                        <span class="close" id="closeModal">&times;</span>
+
+                                        <div class="row qr-text d-flex justify-content-center">
+                                            <div class="col-lg-12 d-flex justify-content-center">
+                                                <p id="qr-name" class="qr-sign"><?php echo $_SESSION["first_name"], " " ,$_SESSION["last_name"]; ?></p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row qr-image d-flex justify-content-center">
+                                            <div class="col-lg-3 d-flex justify-content-center">
+                                                <img src="" id="qrcode">
+                                            </div>
+                                        </div>
+
+                                        <!-- Borrow button with ID for styling -->
+                                        <div class="col-lg-3 d-flex justify-content-center">
+                                            <a download href="https://api.qrserver.com/v1/create-qr-code/?size=[250]x[250]&data=<?php echo $_SESSION["first_name"], " " ,
+                                            $_SESSION["last_name"]; ?>&download=1">
+                                            <input class="download-button format" type="submit" value="DOWNLOAD QR">
+                                            </a>
+                                        </div>
+                                    
+                                        <!-- Remove button with ID for styling 
+                                        <button id="remove-button">Remove</button>-->
+                                  
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-lg-8">
                                 <p><?php echo $_SESSION["email"]; ?></p>
