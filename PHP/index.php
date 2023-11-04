@@ -84,10 +84,11 @@ if(isset($_POST["login"])){
 
   </div>
 </div>
-    <script src = "../JavaScript/app2.js"></script>
+    
     <script src = "https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src = "https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src = "https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src = "../JavaScript/index.js"></script>
+    <script src = "../JavaScript/app2.js"></script>
 </body>
 </html>
