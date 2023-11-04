@@ -1,4 +1,4 @@
-		// Get the modal and its elements
+    // Get the modal and its elements
         const modal = document.getElementById("myModal");
         const modalTitle = document.getElementById("modal-title");
         const modalAuthor = document.getElementById("modal-author");

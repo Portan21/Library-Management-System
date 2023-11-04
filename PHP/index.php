@@ -1,7 +1,27 @@
-<?php
-session_start();
-$conn = mysqli_connect("localhost", "root", "", "scribe");
+<?php 
+require 'config.php';
+
+if(isset($_POST["login"])){
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $result = mysqli_query($conn, "SELECT * FROM account WHERE email = '$email'");
+    $row = mysqli_fetch_assoc($result);
+
+    if(mysqli_num_rows($result) > 0){
+        if(password_verify($password, $row["password"])){
+            $_SESSION["login"] = true;
+            $_SESSION["accountID"] = $row["accountID"];
+            $_SESSION["idnumber"] = $row["idnumber"];
+            $_SESSION["email"] = $row["email"];
+            $_SESSION["first_name"] = $row["first_name"];
+            $_SESSION["last_name"] = $row["last_name"];
+            $_SESSION["typeID"] = $row["typeID"];
+        }
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +29,7 @@ $conn = mysqli_connect("localhost", "root", "", "scribe");
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catalog</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../CSS/index.css">
     <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel = "stylesheet" href = "https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"> 
 </head>
@@ -64,10 +84,10 @@ $conn = mysqli_connect("localhost", "root", "", "scribe");
 
   </div>
 </div>
-	<script src = "./script.js"></script>
+    <script src = "../JavaScript/app2.js"></script>
     <script src = "https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src = "https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src = "https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    <script src = "./app2.js"></script>
+    <script src = "../JavaScript/index.js"></script>
 </body>
 </html>
