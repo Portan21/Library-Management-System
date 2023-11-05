@@ -4,12 +4,6 @@ let showPauseBanner = true;
 function onScanSuccess(decodedText, decodedResult) {
   // handle the scanned code as you like, for example:
   console.log(`Code matched = ${decodedText}`, decodedResult);
-  html5QrcodeScanner.pause(shouldPauseVideo, showPauseBanner);
-  setTimeout(resume, 3000);
-}
-
-function resume(){
-  html5QrcodeScanner.resume();
 }
 
 function onScanFailure(error) {
