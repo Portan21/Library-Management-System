@@ -4,6 +4,10 @@ if(empty($_SESSION["accountID"])){
     header("Location: login.php");
 }
 
+if($_SESSION["typeID"] == 4){
+    header("Location: catalog.php");
+}
+
 if(isset($_POST["regis"])){
     $fname = $_POST["firstname"];
     $lname = $_POST["lastname"];
@@ -27,9 +31,10 @@ if(isset($_POST["regis"])){
         if($password == $confirmpassword){
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-            $insertquery =  "INSERT INTO account_approval VALUES('','$sid','$email','$hashed_password','$fname','$lname','$accounttype')";
+            $insertquery = "INSERT INTO account (IDnumber, email, password, first_name, last_name, typeID) VALUES ('$sid', '$email', '$hashed_password', '$fname', '$lname', '$accounttype')";
+
             mysqli_query($conn,$insertquery);
-            echo "<script> alert('Registration Successful!! Go to the library to verify your account before entering the premise.'); </script>";
+            echo "<script> alert('Registration Successful!!'); </script>";
         }
         else{
             echo "<script> alert('Password Does Not Match'); </script>";
@@ -44,10 +49,10 @@ if(isset($_POST["regis"])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="CSS/bootstrap.min.css">
-    <link rel="stylesheet" href="CSS/register.css">
-    <script defer src="JavaScript/bootstrap.bundle.min.js"></script>
-    <script defer src="JavaScript/javascript.js"></script>
+    <link rel="stylesheet" href="../CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="../CSS/register.css">
+    <script defer src="../JavaScript/bootstrap.bundle.min.js"></script>
+    <script defer src="../JavaScript/javascript.js"></script>
     <title>Create Admin/Librarian Account</title>
 </head>
 <body>
@@ -75,7 +80,7 @@ if(isset($_POST["regis"])){
                                 <label class="input-text" for="lastname">LAST NAME</label><br>
                                 <input class="input-lastname format" type="text" id="lastname" name="lastname" required>
 
-                                <label class="input-text" for="ID">ID NUMBER</label><br>
+                                <label class="input-text" for="sID">ID NUMBER</label><br>
                                 <input class="input-ID format" type="text" id="sID" name="sID" required>
 
                                 <label class="input-text" for="email">EMAIL ADDRESS</label><br>
@@ -101,13 +106,13 @@ if(isset($_POST["regis"])){
                                 <label class="form-check-label" for="accountType3"> Librarian</label>
                                 </div>
 
-                                <button class="submit-button format" type="submit" value="SUBMIT" id="regis" name="regis">SUBMIT</button>
+                                <button class="submit-button format" type="submit" value="SUBMIT" id="regis" name="regis" onclick='return confirmApprove()'>SUBMIT</button>
                             </form>
                         </div>
                         <div class="row d-flex justify-content-center">
                                 <div class="col-lg-6 d-flex justify-content-center mt-2">
                                    
-                                    <a class="create-format" href="catalog.php">Back to Catalog</a>
+                                    <a class="create-format" href="catalogs.php">Back to Catalog</a>
                                 </div>
                         </div>
                     </div>
@@ -117,5 +122,11 @@ if(isset($_POST["regis"])){
             </div>
         </div>
     </div>
+    
+    <script>
+    function confirmApprove() {
+        return confirm('Press "OK" to proceed on creating the account. Press "Cancel" otherwise.');
+    }
+    </script>
 </body>
 </html>

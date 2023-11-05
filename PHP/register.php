@@ -26,7 +26,7 @@ if(isset($_POST["regis"])){
         if($password == $confirmpassword){
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-            $insertquery =  "INSERT INTO account_approval VALUES('','$sid','$email','$hashed_password','$fname','$lname')";
+            $insertquery =  "INSERT INTO account_approval (IDnumber, email, password, first_name, last_name) VALUES('$sid','$email','$hashed_password','$fname','$lname')";
             mysqli_query($conn,$insertquery);
             echo "<script> alert('Registration Successful!! Go to the library to verify your account before entering the premise.'); </script>";
         }
@@ -44,10 +44,10 @@ if(isset($_POST["regis"])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="CSS/bootstrap.min.css">
-    <link rel="stylesheet" href="CSS/register.css">
-    <script defer src="JavaScript/bootstrap.bundle.min.js"></script>
-    <script defer src="JavaScript/javascript.js"></script>
+    <link rel="stylesheet" href="../CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="../CSS/register.css">
+    <script defer src="../JavaScript/bootstrap.bundle.min.js"></script>
+    <script defer src="../JavaScript/javascript.js"></script>
     <title>Register</title>
 </head>
 <body>
@@ -83,7 +83,7 @@ if(isset($_POST["regis"])){
                               </form>
                         </div>
                         
-                        <div class="row d-flex justify-content-center">
+                        <div class="row d-flex justify-content-center mb-4">
                                 <div class="col-lg-6 d-flex justify-content-center mt-2">
                                    
                                     <a class="create-format" href="login.php">Already Have An Account? Login</a>

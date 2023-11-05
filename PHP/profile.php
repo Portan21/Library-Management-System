@@ -69,7 +69,7 @@
                             <div class="col-lg-8 dynamic-info">
                                 <p><?php echo $_SESSION["first_name"], " " ,$_SESSION["last_name"]; ?></p>
                                 <p><?php echo $_SESSION["email"]; ?></p>
-                                <p><?php echo $_SESSION['IDnumber']; ?></p>
+                                <p><?php echo $_SESSION["IDnumber"]; ?></p>
                             </div>
                         </div>       
                     </div>

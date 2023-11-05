@@ -1,38 +1,39 @@
 <?php 
-    require 'config.php';
-    if(!empty($_SESSION["accountID"])){
-        header("Location: catalog.php");
-    }
+require 'config.php';
+if(!empty($_SESSION["accountID"])){
+    header("Location: catalog.php");
+}
 
-    if(isset($_POST["login"])){
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+if(isset($_POST["login"])){
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-        $result = mysqli_query($conn, "SELECT * FROM account WHERE email = '$email'");
-        $row = mysqli_fetch_assoc($result);
+    $result = mysqli_query($conn, "SELECT * FROM account WHERE email = '$email'");
+    $row = mysqli_fetch_assoc($result);
 
-        if(mysqli_num_rows($result) > 0){
-            if(password_verify($password, $row["password"])){
-                $_SESSION["login"] = true;
-                $_SESSION["accountID"] = $row["accountID"];
-                $_SESSION["IDnumber"] = $row["IDnumber"];
-                $_SESSION["email"] = $row["email"];
-                $_SESSION["first_name"] = $row["first_name"];
-                $_SESSION["last_name"] = $row["last_name"];
-                $_SESSION["typeID"] = $row["typeID"];
+    if(mysqli_num_rows($result) > 0){
+        if(password_verify($password, $row["password"])){
+            $_SESSION["login"] = true;
+            $_SESSION["accountID"] = $row["accountID"];
+            $_SESSION["idnumber"] = $row["idnumber"];
+            $_SESSION["IDnumber"] = $row["IDnumber"];
+            $_SESSION["email"] = $row["email"];
+            $_SESSION["first_name"] = $row["first_name"];
+            $_SESSION["last_name"] = $row["last_name"];
+            $_SESSION["typeID"] = $row["typeID"];
 
-                header("Location: catalog.php");
-            }
-            else{
-                echo "<script> alert('Wrong Password'); </script>";
-            }
+            header("Location: catalog.php");
         }
         else{
-            echo "<script> alert('Email Not Registered'); </script>";
+            echo "<script> alert('Wrong Password'); </script>";
         }
     }
-?>
+    else{
+        echo "<script> alert('Email Not Registered'); </script>";
+    }
+}
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,7 +42,7 @@
     <link rel="stylesheet" href="../CSS/bootstrap.min.css">
     <link rel="stylesheet" href="../CSS/login.css">
     <script defer src="../JavaScript/bootstrap.bundle.min.js"></script>
-    <script defer src="js/javascript.js"></script>
+    <script defer src="../JavaScript/javascript.js"></script>
     <title>Login</title>
 </head>
 <body>
@@ -97,3 +98,4 @@
     </div>
 </body>
 </html>
+
