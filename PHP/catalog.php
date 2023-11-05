@@ -21,20 +21,17 @@
 <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
 
 <!-- Bootstrap -->
-<link rel="stylesheet" type="text/css"  href="css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="fonts/font-awesome/css/font-awesome.css">
+<link rel="stylesheet" type="text/css"  href="CSS/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="fonts/font-awesome/CSS/font-awesome.css">
 
 <!-- Stylesheet
     ================================================== -->
-<link rel="stylesheet" type="text/css" href="css/style.css">
-<link rel="stylesheet" type="text/css" href="css/nivo-lightbox/nivo-lightbox.css">
-<link rel="stylesheet" type="text/css" href="css/nivo-lightbox/default.css">
+<link rel="stylesheet" type="text/css" href="CSS/style.css">
+<link rel="stylesheet" type="text/css" href="CSS/nivo-lightbox/nivo-lightbox.css">
+<link rel="stylesheet" type="text/css" href="CSS/nivo-lightbox/default.css">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
-
     <title>Catalog</title>
     <!-- Include necessary CSS and JavaScript files here -->
 </head>
@@ -69,82 +66,53 @@
     </nav>
 
     <!-- Body Content -->
-    <div class="container">
-    <br>
-    <br>
-    <br>
-    <br>
      
-        <br>
-        <br>
-        
-        <!-- Add your page content here -->
-
-        <div class="container mx-auto p-8">
-    <h1 class="text-2xl font-semibold mb-4">Library Catalog</h1>
-    <table id = "myTable" class="w-full table-auto bg-white border border-gray-200">
+    <div class = "container py-5">
+    <div class ="row">
+    <table id="example" class="content-table" tyle="width:100%">
         <thead>
-            <tr class="bg-blue-100">
-                <th class="px-4 py-2 text-center border">Book Title</th>
-                <th class="px-4 py-2 text-center border">Author</th>
-                <th class="px-4 py-2 text-center border">Rating</th>
-                <th class="px-4 py-2 text-center border">Year Published</th>
-                <th class="px-4 py-2 text-center border">Availability</th>
+          <tr>
+            <th>Book Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Year Published</th>
+            <th>Availability</th>
             </tr>
         </thead>
         <tbody>
+		<?php
+        $result = mysqli_query($conn, "SELECT book_name,author,genres,rating,availability FROM book");
+        while($row = mysqli_fetch_assoc($result)){
+            echo 
+            "<tr>
+                <td class='px-4 py-2 text-center border'>$row[book_name]</td>
+                <td class='px-4 py-2 text-center border'>$row[author]</td>
+                <td class='px-4 py-2 text-center border'>$row[genres]</td>
+                <td class='px-4 py-2 text-center border'>$row[rating]</td>
+                <td class='px-4 py-2 text-center border'>$row[availability]</td>
+            </tr>";
+         }
+         ?>
             <tr>
                 <td class="px-4 py-2 text-center border">The Great Gatsby</td>
                 <td class="px-4 py-2 text-center border">F. Scott Fitzgerald</td>
                 <td class="px-4 py-2 text-center border">4.5</td>
-                <td class="px-4 py-2 text-center border">1925</td>
                 <td class="px-4 py-2 text-center border">Available</td>
             </tr>
-            <tr>
-                <td class="px-4 py-2 text-center border">To Kill a Mockingbird</td>
-                <td class="px-4 py-2 text-center border">Harper Lee</td>
-                <td class="px-4 py-2 text-center border">4.8</td>
-                <td class="px-4 py-2 text-center border">1960</td>
-                <td class="px-4 py-2 text-center border">Available</td>
-            </tr>
-
-            <tr>
-                <td class="px-4 py-2 text-center border">To Kill a Mockingbird</td>
-                <td class="px-4 py-2 text-center border">Harper Lee</td>
-                <td class="px-4 py-2 text-center border">4.8</td>
-                <td class="px-4 py-2 text-center border">1960</td>
-                <td class="px-4 py-2 text-center border">Available</td>
-            </tr>
-
-            <tr>
-                <td class="px-4 py-2 text-center border">To Kill a Mockingbird</td>
-                <td class="px-4 py-2 text-center border">Harper Lee</td>
-                <td class="px-4 py-2 text-center border">4.8</td>
-                <td class="px-4 py-2 text-center border">1960</td>
-                <td class="px-4 py-2 text-center border">Available</td>
-            </tr>
-
-            <tr>
-                <td class="px-4 py-2 text-center border">To Kill a Mockingbird</td>
-                <td class="px-4 py-2 text-center border">Harper Lee</td>
-                <td class="px-4 py-2 text-center border">4.8</td>
-                <td class="px-4 py-2 text-center border">1960</td>
-                <td class="px-4 py-2 text-center border">Available</td>
-            </tr>
-            
         </tbody>
     </table>
-    <!-- Pagination -->
-    <div class="flex justify-center mt-4">
-      <div class="bg-white p-2 border border-gray-200 rounded-md">
-          <button id="prevPage" class="text-blue-500 px-3 py-2 mr-2 hover:underline" disabled>Previous</button>
-          <span id="currentPage" class="px-2 py-2">1</span>
-          <button id="nextPage" class="text-blue-500 px-3 py-2 ml-2 hover:underline">Next</button>
       </div>
   </div>
+    
+    
+    <!-- Pagination -->
+    
 </div>
 <script> 
-
+<script src = "https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src = "https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src = "https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src = "./app2.js"></script>
 // JavaScript logic for dynamic pagination
 const table = document.querySelector('table');
         const rows = table.querySelectorAll('tbody tr');
