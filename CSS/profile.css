@@ -25,7 +25,7 @@
 }
 
 .profile-frame{
-    padding-left: 7%;    
+    padding-left: 3%;    
 }
 
 .overview{
@@ -35,6 +35,8 @@
 }
 
 .attendance{
+    margin: 0;
+    padding: 0;
     margin-left: 3%;
 }
 
@@ -78,15 +80,17 @@
     margin-top: 4%;
 }
 
-.download-button, .view-button{
+.download-button, .view-button, .view-all{
     border: 2px solid transparent;
     border-radius: 20px;
     width: 350px;
     height: 45px;
     margin-top: 12%;
-    padding-left: 20px;
-    padding-right: 20px;
     background-color: #d6eeff;
+}
+
+.view-all{
+    margin: 0;
 }
 
 a{
@@ -105,7 +109,7 @@ a{
         font-weight: bold;
     }
 
-    .download-button, .view-button{
+    .download-button, .view-button, .view-all{
         border: 2px solid transparent;
         border-radius: 20px;
         width: 200px;

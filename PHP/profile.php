@@ -1,25 +1,5 @@
 <?php 
-require 'config.php';
-
-if(isset($_POST["login"])){
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    $result = mysqli_query($conn, "SELECT * FROM account WHERE email = '$email'");
-    $row = mysqli_fetch_assoc($result);
-
-    if(mysqli_num_rows($result) > 0){
-        if(password_verify($password, $row["password"])){
-            $_SESSION["login"] = true;
-            $_SESSION["accountID"] = $row["accountID"];
-            $_SESSION["IDnumber"] = $row["IDnumber"];
-            $_SESSION["email"] = $row["email"];
-            $_SESSION["first_name"] = $row["first_name"];
-            $_SESSION["last_name"] = $row["last_name"];
-            $_SESSION["typeID"] = $row["typeID"];
-        }
-    }
-}
+    require 'config.php';
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +31,7 @@ if(isset($_POST["login"])){
                                 <p class="static-text">ID Number</p>
                                 <div class="col-lg-3">
                                 <a href='#'>
-                                <input class="view-button format" type="submit" value="View QR">
+                                <input class="view-button" type="submit" value="View QR">
                                 </a>
                                 </div>
                                 <div id="myModal" class="modal2">
@@ -89,7 +69,7 @@ if(isset($_POST["login"])){
                             <div class="col-lg-8 dynamic-info">
                                 <p><?php echo $_SESSION["first_name"], " " ,$_SESSION["last_name"]; ?></p>
                                 <p><?php echo $_SESSION["email"]; ?></p>
-                                <p><?php echo $_SESSION["accountID"]; ?></p>
+                                <p><?php echo $_SESSION["IDnumber"]; ?></p>
                             </div>
                         </div>       
                     </div>
@@ -102,37 +82,42 @@ if(isset($_POST["login"])){
                         </div>
                         <div class = "container attendance">
                             <div class ="row">
-                            <table id="example" class="content-table" style="width:100%">
+                            <table id="example" class="content-table table-borderless" style="width:100%">
                                 <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Date</th>
-                                    <th>Time in</th>
-                                    <th>Time out</th>
-                                </tr>
+                                    <tr>
+                                        <th class='px-4 py-2 text-center'>Date</th>
+                                        <th class='px-4 py-2 text-center'>Time in</th>
+                                        <th class='px-4 py-2 text-center'>Time out</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 <?php
-                                $result = mysqli_query($conn, "SELECT accountID,entry_time,exit_time FROM attendance");
-                                while($row = mysqli_fetch_assoc($result)){
-                                #$bookName = htmlspecialchars($row['book_name']);
-                                #$description = htmlspecialchars($row['description']);
-                                echo "<tr>
-                                    <td class='px-4 py-2 text-center border'>$row[accountID]</td>
-                                    <td class='px-4 py-2 text-center border'>$row[entry_time]</td>
-                                    <td class='px-4 py-2 text-center border'>$row[exit_time]</td>
-                                </tr>";
-                                
-                                }
+                                    $accID = $_SESSION["accountID"];
+                                    $result = mysqli_query($conn, "SELECT accountID, entry_time, exit_time
+                                    FROM attendance
+                                    WHERE accountID = '$accID'
+                                    ORDER BY entry_time DESC
+                                    LIMIT 5;");
+                                    while($row = mysqli_fetch_assoc($result)){
+                                    echo "<tr>
+                                        <td class='px-4 py-2 text-center'>$row[accountID]</td>
+                                        <td class='px-4 py-2 text-center'>$row[entry_time]</td>
+                                        <td class='px-4 py-2 text-center'>$row[exit_time]</td>
+                                    </tr>";
+                                    }     
                                 ?>
                                 </tbody>
                             </table>
+                            <a href='attendance.php'>
+                                <input class="view-all format" type="submit" value="View all">
+                            </a>
                         </div>
                     </div>
                     </div>
                 </div>
             </div>
-
+        </div>
+        <div class="row profile">
             <div class="profile-container col-lg-12 pt-0">
                 <div class="profile-form profile-form-left col-lg-6 border-0 shadow">
                     <div class="col-lg-11 profile-frame">
@@ -140,38 +125,50 @@ if(isset($_POST["login"])){
                             <p class="overview">Borrowed Books</p>
                             <hr>
                         </div>
-                        <div class = "container attendance">
+                        <div class = "container borrowed-books">
                             <div class ="row">
-                            <table id="example" class="content-table" style="width:100%">
+                            <table id="example" class="content-table table-borderless" style="width:100%">
                                 <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Date</th>
-                                    <th>Date of return</th>
-                                    <th>Title</th>
-                                    <th>Status</th>
-                                </tr>
+                                    <tr>
+                                        <th class='px-4 py-2 text-center'>Date</th>
+                                        <th class='px-4 py-2 text-center'>Date of Return</th>
+                                        <th class='px-4 py-2 text-center'>Title</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 <?php
-                                $result = mysqli_query($conn, "SELECT borrow_date,deadline,bookID,librarianID FROM borrowed_book"); #Add status and book title!!!!!!!! (librarianID for placeholder)
-                                while($row = mysqli_fetch_assoc($result)){
-                                #$bookName = htmlspecialchars($row['book_name']);
-                                #$description = htmlspecialchars($row['description']);
-                                echo "<tr>
-                                    <td class='px-4 py-2 text-center border'>$row[borrow_date]</td>
-                                    <td class='px-4 py-2 text-center border'>$row[deadline]</td>
-                                    <td class='px-4 py-2 text-center border'>$row[bookID]</td>
-                                    <td class='px-4 py-2 text-center border'>$row[librarianID]</td>
-                                </tr>";
-                                }
+                                    $accID = $_SESSION["accountID"];
+                                    $result = mysqli_query($conn, "SELECT borrow_date,deadline,bookID
+                                    FROM borrowed_book
+                                    WHERE borrowerID = '$accID'
+                                    ORDER BY borrow_date DESC
+                                    LIMIT 5;");
+
+                                    while($row = mysqli_fetch_assoc($result)){
+
+                                        $booknumber = $row["bookID"];
+                                        $result2 = mysqli_query($conn, "SELECT book_name
+                                        FROM book
+                                        WHERE bookID = '$booknumber';");
+
+                                        $row2 = mysqli_fetch_assoc($result2);
+
+                                        echo "<tr>
+                                            <td class='px-4 py-2 text-center'>$row[borrow_date]</td>
+                                            <td class='px-4 py-2 text-center'>$row[deadline]</td>
+                                            <td class='px-4 py-2 text-center'>$row2[book_name]</td>
+                                        </tr>";
+                                    }     
                                 ?>
                                 </tbody>
                             </table>
+                            <a href='borrowedbooks.php'>
+                                <input class="view-all format" type="submit" value="View all">
+                            </a>
                         </div>
                     </div>
                 </div>
-                </div>
+            </div>
                 <div class="profile-form profile-form-right col-lg-6 border-0 shadow">
                     <div class="col-lg-11 profile-frame">
                         <div class="col-lg-12">

@@ -16,6 +16,7 @@ if(isset($_POST["login"])){
             $_SESSION["login"] = true;
             $_SESSION["accountID"] = $row["accountID"];
             $_SESSION["idnumber"] = $row["idnumber"];
+            $_SESSION["IDnumber"] = $row["IDnumber"];
             $_SESSION["email"] = $row["email"];
             $_SESSION["first_name"] = $row["first_name"];
             $_SESSION["last_name"] = $row["last_name"];
@@ -41,7 +42,7 @@ if(isset($_POST["login"])){
     <link rel="stylesheet" href="../CSS/bootstrap.min.css">
     <link rel="stylesheet" href="../CSS/login.css">
     <script defer src="../JavaScript/bootstrap.bundle.min.js"></script>
-    <script defer src="js/javascript.js"></script>
+    <script defer src="../JavaScript/javascript.js"></script>
     <title>Login</title>
 </head>
 <body>
@@ -97,3 +98,4 @@ if(isset($_POST["login"])){
     </div>
 </body>
 </html>
+
