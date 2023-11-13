@@ -1,4 +1,5 @@
 <?php 
+
 require 'config.php';
 if(!empty($_SESSION["accountID"])){
     header("Location: catalog.php");
