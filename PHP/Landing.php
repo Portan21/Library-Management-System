@@ -1,9 +1,5 @@
 <?php
     require 'config.php';
-
-    if($_SESSION["typeID"] == 4){
-      header("Location: catalogs.php");
-  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
