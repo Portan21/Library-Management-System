@@ -1,7 +1,7 @@
 <?php
     require 'config.php';
 
-    if($_SESSION["typeID"] == 4){
+    if($_SESSION["typeID"] == 4){ 
       header("Location: catalogs.php");
   }
 ?>
@@ -60,8 +60,12 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="catalog.php" class="page-scroll">Catalog</a></li>
-                    <li><a href="profile.html" class="page-scroll">Profile</a></li>
+                    <li><a href="catalogs.php" class="page-scroll">Catalog</a></li>
+                    <li><a href="approval.php" class="page-scroll">Approval</a></li>
+                    <li><a href="request.php" class="page-scroll">Request</a></li>
+                    <li><a href="borrowed.php" class="page-scroll">Borrowed</a></li>
+                    <li><a href="penalty.php" class="page-scroll">Penalty</a></li>
+                    <li><a href="profile.php" class="page-scroll">Profile</a></li>
                     <li><a href="logout.php" class="page-scroll">Log Out</a></li>
                 </ul>
             </div>
@@ -81,7 +85,7 @@
       <div class="portfolio-items">
         <div class="col-sm-6 col-md-6">
           <div class="portfolio-item">
-            <div class="hover-bg"> <a href="https://www.youtube.com/" title="Create Librarian Account" data-lightbox-gallery="gallery1">
+            <div class="hover-bg"> <a href="createlib.php" title="Create Librarian Account" data-lightbox-gallery="gallery1">
               <div class="hover-text">
                 <h4>Create Librarian Account</h4>
               </div>
