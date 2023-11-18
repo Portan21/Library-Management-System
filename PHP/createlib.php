@@ -50,7 +50,94 @@ if(isset($_POST["regis"])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../CSS/bootstrap.min.css">
-    <link rel="stylesheet" href="../CSS/register.css">
+    <style>
+        .container-fluid{
+    background-color: #e9f6ff;
+    height: 100%;
+}
+
+.register{
+    padding: 10%;
+    padding-top: 7%;
+}
+
+.register-sign{
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.register-form{
+    background-color: #ffffff;
+    height: 100%;
+}
+
+.register-text{
+    margin: 0;
+    padding: 0;
+    padding-top: 4%;
+}
+
+.register-frame{
+    height: 100%;
+    width: 100%;
+}
+
+.format{
+    border: 2px solid gray;
+    border-radius: 20px;
+    width: 350px;
+    padding-left: 10px;
+    height: 25px;
+    display: block;
+}
+
+.submit-button{
+    border: 2px solid transparent;
+    border-radius: 20px;
+    width: 350px;
+    height: 45px;
+    margin-top: 8%;
+    background-color: #d6eeff;
+}
+
+a{
+    font-size: 12px;
+}
+
+.input-text{
+    font-size: 12px;
+}
+
+@media only screen and (max-width: 1000px) {
+    .regsiter-form{
+        background-color: #ffffff;
+        height: 70vh;
+    }
+
+    .format{
+        border: 2px solid gray;
+        border-radius: 20px;
+        width: 200px;
+        padding-left: 10px;
+        height: 25px;
+        display: block;
+    }
+
+    .submit-button{
+        border: 2px solid transparent;
+        border-radius: 20px;
+        width: 200px;
+        height: 45px;
+        margin-top: 8%;
+        background-color: #d6eeff;
+    }
+}
+  
+
+
+
+
+    </style>
     <script defer src="../JavaScript/bootstrap.bundle.min.js"></script>
     <script defer src="../JavaScript/javascript.js"></script>
     <title>Create Admin/Librarian Account</title>
@@ -112,7 +199,7 @@ if(isset($_POST["regis"])){
                         <div class="row d-flex justify-content-center">
                                 <div class="col-lg-6 d-flex justify-content-center mt-2">
                                    
-                                    <a class="create-format" href="catalogs.php">Back to Catalog</a>
+                                    <a class="create-format" href="landing.php">Back to Landing</a>
                                 </div>
                         </div>
                     </div>

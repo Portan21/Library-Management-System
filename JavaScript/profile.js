@@ -21,7 +21,7 @@ bookButtons.forEach((button) => {
 
 // Close the modal when the 'x' is clicked or when clicking outside of it
 const closeModal = document.getElementById("closeModal");
-closeModal2.addEventListener("click", () => {
+closeModal.addEventListener("click", () => {
   modal.style.display = "none";
 });
 

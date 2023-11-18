@@ -1,5 +1,9 @@
 <?php
     require 'config.php';
+
+    if($_SESSION["typeID"] == 4){ 
+      header("Location: catalogs.php");
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,28 +41,37 @@
 <title>Catalog</title>
     <!-- Include necessary CSS and JavaScript files here -->
 </head>
-<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
-
-<!-- Navigation Bar -->
-<nav id="menu" class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand page-scroll" href="#page-top">SCRIBE</a>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="catalog.php" class="page-scroll">Catalog</a></li>
-                <li><a href="profile.html" class="page-scroll">Profile</a></li>
-                <li><a href="logout.php" class="page-scroll">Log Out</a></li>
-            </ul>
+<body>
+    <a href="logout.php">logout, <?php echo'$_SESSION["first_name"]';?></a>
+    
+    <!-- Navigation Bar -->
+    <nav id="menu" class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img src="..png" alt="Library Logo" style="float: left; margin-right: 10px;">
+                <a class="navbar-brand page-scroll" href="#page-top">SCRIBE</a>
+                
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="catalogs.php" class="page-scroll">Catalog</a></li>
+                    <li><a href="approval.php" class="page-scroll">Approval</a></li>
+                    <li><a href="request.php" class="page-scroll">Request</a></li>
+                    <li><a href="borrowed.php" class="page-scroll">Borrowed</a></li>
+                    <li><a href="penalty.php" class="page-scroll">Penalty</a></li>
+                    <li><a href="profile.php" class="page-scroll">Profile</a></li>
+                    <li><a href="logout.php" class="page-scroll">Log Out</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
         </div>
         <!-- /.navbar-collapse -->
     </div>
@@ -76,7 +89,7 @@
       <div class="portfolio-items">
         <div class="col-sm-6 col-md-6">
           <div class="portfolio-item">
-            <div class="hover-bg"> <a href="https://www.youtube.com/" title="Create Librarian Account" data-lightbox-gallery="gallery1">
+            <div class="hover-bg"> <a href="createlib.php" title="Create Librarian Account" data-lightbox-gallery="gallery1">
               <div class="hover-text">
                 <h4>Create Librarian Account</h4>
               </div>
