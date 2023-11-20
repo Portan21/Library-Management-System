@@ -23,7 +23,7 @@ if(isset($_POST["login"])){
             $_SESSION["last_name"] = $row["last_name"];
             $_SESSION["typeID"] = $row["typeID"];
 
-            header("Location: catalog.php");
+            header("Location: landing.php");
         }
         else{
             echo "<script> alert('Wrong Password'); </script>";

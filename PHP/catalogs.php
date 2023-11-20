@@ -49,7 +49,51 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 </head>
 <body>
+<nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary shadow">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="landing.php">SCRIBE</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mb-lg-0 ms-auto">
 
+            <li class="nav-item">
+            <a class="nav-link active" href="catalogs.php">Catalog</a>
+            </li>
+	    <?php
+        $acctype = $_SESSION["typeID"];
+	    if($acctype != 4){
+	    echo"
+            <li class='nav-item'>
+            <a class='nav-link' href='approval.php'>Approval</a>
+            </li>
+
+            <li class='nav-item'>
+            <a class='nav-link' href='request.php'>Request</a>
+            </li>
+
+            <li class='nav-item'>
+            <a class='nav-link' href='borrowed.php'>Borrowed</a>
+            </li>
+
+            <li class='nav-item'>
+            <a class='nav-link' href='penalty.php'>Penalty</a>
+            </li>";
+	    }
+
+	    ?>
+
+            <li class="nav-item">
+            <a class="nav-link" href="profile.php">Profile</a>
+            </li>
+
+            <li class="nav-item">
+            <a class="nav-link" href="logout.php">Logout</a>
+            </li>
+        </ul>
+    </div>
+    </nav>
     <div class = "container py-5">
     <div class ="row">
     <table id="example" class="content-table" tyle="width:100%">

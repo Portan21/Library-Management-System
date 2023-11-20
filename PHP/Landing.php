@@ -3,7 +3,7 @@
     require 'config.php';
 
     if($_SESSION["typeID"] == 4){ 
-      header("Location: catalogs.php");
+      header("Location: patron_landing.php");
   }
 ?>
 <!DOCTYPE html>
@@ -110,7 +110,7 @@
         
         <div class="col-sm-6 col-md-6">
           <div class="portfolio-item">
-            <div class="hover-bg"> <a href="link" title="Borrow Request" data-lightbox-gallery="gallery1">
+            <div class="hover-bg"> <a href="request.php" title="Borrow Request" data-lightbox-gallery="gallery1">
               <div class="hover-text">
                 <h4>Borrow Request</h4>
               </div>
@@ -120,7 +120,7 @@
 
         <div class="col-sm-6 col-md-6">
           <div class="portfolio-item">
-            <div class="hover-bg"> <a href="link" title=" Account Approval" data-lightbox-gallery="gallery1">
+            <div class="hover-bg"> <a href="approval.php" title=" Account Approval" data-lightbox-gallery="gallery1">
               <div class="hover-text">
                 <h4>Account Approval</h4>
               </div>

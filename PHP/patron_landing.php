@@ -56,8 +56,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="catalog.php" class="page-scroll">Catalog</a></li>
-                <li><a href="profile.html" class="page-scroll">Profile</a></li>
+                <li><a href="catalogs.php" class="page-scroll">Catalog</a></li>
+                <li><a href="profile.php" class="page-scroll">Profile</a></li>
                 <li><a href="logout.php" class="page-scroll">Log Out</a></li>
             </ul>
         </div>
@@ -81,7 +81,8 @@
       <div class="portfolio-items">
         <div class="col-sm-6 col-md-6">
           <div class="portfolio-item">
-            <div class="hover-bg"> <a href="https://www.youtube.com/" title="Create Librarian Account" data-lightbox-gallery="gallery1">
+            <div class="hover-bg">
+              <a href="catalogs.php" title="Create Librarian Account" data-lightbox-gallery="gallery1">
               <div class="hover-text">
                 <h4>VIEW CATALOG</h4>
               </div>
@@ -91,7 +92,8 @@
         
         <div class="col-sm-6 col-md-6">
           <div class="portfolio-item">
-            <div class="hover-bg"> <a href="link" title=" Issue Book" data-lightbox-gallery="gallery1">
+            <div class="hover-bg">
+              <a href="profile.php" title=" Issue Book" data-lightbox-gallery="gallery1">
               <div class="hover-text">
                 <h4>USER PROFILE</h4>
               </div>
@@ -101,7 +103,8 @@
         
         <div class="col-sm-6 col-md-6">
           <div class="portfolio-item">
-            <div class="hover-bg"> <a href="link" title="Borrow Request" data-lightbox-gallery="gallery1">
+            <div class="hover-bg">
+              <a href="profile.php" title="Borrow Request" data-lightbox-gallery="gallery1">
               <div class="hover-text">
                 <h4>VIEW QR CODE</h4>
               </div>

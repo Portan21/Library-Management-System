@@ -54,7 +54,7 @@ if(isset($_POST["regis"])){
     <style>
         .container-fluid{
     background-color: #e9f6ff;
-    height: 100%;
+    height: 100vh;
 }
 
 .register{
