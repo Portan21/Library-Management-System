@@ -2,34 +2,36 @@
 
 require 'config.php';
 
-if($_SESSION["typeID"] == 4){
+if(empty($_SESSION["accountID"])){
+    header("Location: login.php");
+}
+
+if(empty($_SESSION["typeID"])){
     header("Location: catalog.php");
+}
+else{
+    if($_SESSION["typeID"] == 3){
+        header("Location: landing.php");
+    }
+    $typeid = $_SESSION["typeID"];
 }
 
 if(isset($_POST["regis"])){
-    $fname = $_POST["firstname"];
-    $lname = $_POST["lastname"];
-    $sid = $_POST["sID"];
+    $fname = $_POST["name"];
     $email = $_POST["email"];
     $password = $_POST["password"];
     $confirmpassword = $_POST["confirmpassword"];
     $accounttype = $_POST["accountType"];
 
-    $duplicateID = mysqli_query($conn, "SELECT IDnumber FROM account WHERE IDnumber = '$sid'");
-    $duplicateIDapproval = mysqli_query($conn, "SELECT IDnumber FROM account_approval WHERE IDnumber = '$sid'");
-    $duplicateEmail = mysqli_query($conn, "SELECT email FROM account WHERE email = '$email'");
-    $duplicateEmailapproval = mysqli_query($conn, "SELECT email FROM account_approval WHERE email = '$email'");
-    if(mysqli_num_rows($duplicateID) > 0 || mysqli_num_rows($duplicateIDapproval) > 0){
-        echo "<script> alert('ID Has Already Been Taken'); </script>";
-    }
-    else if(mysqli_num_rows($duplicateEmail) > 0 || mysqli_num_rows($duplicateEmailapproval) > 0){
+    $duplicateEmail = mysqli_query($conn, "SELECT email FROM lib_acc WHERE email = '$email'");
+    if(mysqli_num_rows($duplicateEmail) > 0){
         echo "<script> alert('Email Has Already Been Taken'); </script>";
     }
     else{
         if($password == $confirmpassword){
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-            $insertquery = "INSERT INTO account (IDnumber, email, password, first_name, last_name, typeID) VALUES ('$sid', '$email', '$hashed_password', '$fname', '$lname', '$accounttype')";
+            $insertquery = "INSERT INTO lib_acc (email, password, name, typeID) VALUES ('$email', '$hashed_password', '$fname', '$accounttype')";
 
             mysqli_query($conn,$insertquery);
             echo "<script> alert('Registration Successful!!'); </script>";
@@ -49,7 +51,8 @@ if(isset($_POST["regis"])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../CSS/bootstrap.min.css">
     <style>
-        .container-fluid{
+
+    .container-fluid{
     background-color: #e9f6ff;
     height: 100vh;
 }
@@ -159,14 +162,8 @@ a{
                         <div class="col-lg-3 d-flex justify-content-center">
                             <form action="" method="post" autocomplete="off">
 
-                                <label class="input-text" for="firstname">FIRST NAME</label><br>
-                                <input class="input-firstname format" type="text" id="firstname" name="firstname" required>
-
-                                <label class="input-text" for="lastname">LAST NAME</label><br>
-                                <input class="input-lastname format" type="text" id="lastname" name="lastname" required>
-
-                                <label class="input-text" for="sID">ID NUMBER</label><br>
-                                <input class="input-ID format" type="text" id="sID" name="sID" required>
+                                <label class="input-text" for="name">FULL NAME</label><br>
+                                <input class="input-name format" type="text" id="name" name="name" placeholder="Juan Dela Cruz" required>
 
                                 <label class="input-text" for="email">EMAIL ADDRESS</label><br>
                                 <input class="input-email format" type="text" id="email" name="email" required>
@@ -179,16 +176,28 @@ a{
 
                                 <label class="input-text" for="accounttype">ACCOUNT TYPE</label>
                                 <div class="form-check">
-                                <input class="form-check-input" type="radio" name="accountType" id="accountType1" value="1">
-                                <label class="form-check-label" for="accountType1"> Admin</label>
-                                </div>
-                                <div class="form-check">
-                                <input class="form-check-input" type="radio" name="accountType" id="accountType2" value="2">
-                                <label class="form-check-label" for="accountType2"> Head Librarian</label>
-                                </div>
-                                <div class="form-check">
-                                <input class="form-check-input" type="radio" name="accountType" id="accountType3" value="3" checked>
-                                <label class="form-check-label" for="accountType3"> Librarian</label>
+                                    <?php
+                                    if($typeid == 1){
+                                        echo"
+                                        <input class='form-check-input' type='radio' name='accountType' id='accountType1' value='1'>
+                                        <label class='form-check-label' for='accountType1'> Admin</label>
+                                        </div>
+                                        <div class='form-check'>
+                                        <input class='form-check-input' type='radio' name='accountType' id='accountType2' value='2'>
+                                        <label class='form-check-label' for='accountType2'> Head Librarian</label>
+                                        </div>
+                                        <div class='form-check'>
+                                        <input class='form-check-input' type='radio' name='accountType' id='accountType3' value='3' checked>
+                                        <label class='form-check-label' for='accountType3'> Librarian</label>";
+                                    }
+                                    else if($typeid == 2){
+                                        echo"
+                                        <input class='form-check-input' type='radio' name='accountType' id='accountType3' value='3' checked>
+                                        <label class='form-check-label' for='accountType3'> Librarian</label>";
+                                    }
+
+
+                                    ?>
                                 </div>
 
                                 <button class="submit-button format" type="submit" value="SUBMIT" id="regis" name="regis" onclick='return confirmApprove()'>SUBMIT</button>

@@ -1,39 +1,38 @@
 <?php 
 require 'config.php';
+
 if(!empty($_SESSION["accountID"])){
     header("Location: catalog.php");
 }
 
 if(isset($_POST["regis"])){
-    $fname = $_POST["firstname"];
-    $lname = $_POST["lastname"];
-    $sid = $_POST["sID"];
-    $email = $_POST["email"];
+    $email = trim($_POST["email"]);
+    $name = "";
     $password = $_POST["password"];
     $confirmpassword = $_POST["confirmpassword"];
+    
+    // Verify the email ending
+    if (substr($email,-15) == "@adamson.edu.ph") {
+        // Extract the name part
+        $namePart = substr($email, 0, -15);
 
-    $duplicateID = mysqli_query($conn, "SELECT IDnumber FROM account WHERE IDnumber = '$sid'");
-    $duplicateIDapproval = mysqli_query($conn, "SELECT IDnumber FROM account_approval WHERE IDnumber = '$sid'");
-    $duplicateEmail = mysqli_query($conn, "SELECT email FROM account WHERE email = '$email'");
-    $duplicateEmailapproval = mysqli_query($conn, "SELECT email FROM account_approval WHERE email = '$email'");
-    if(mysqli_num_rows($duplicateID) > 0 || mysqli_num_rows($duplicateIDapproval) > 0){
-        echo "<script> alert('ID Has Already Been Taken'); </script>";
-    }
-    else if(mysqli_num_rows($duplicateEmail) > 0 || mysqli_num_rows($duplicateEmailapproval) > 0){
-        echo "<script> alert('Email Has Already Been Taken'); </script>";
+        // Replace dots with spaces and capitalize the first letter of each word
+        $name = ucwords(str_replace('.', ' ', $namePart));
     }
     else{
-        if($password == $confirmpassword){
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-            $insertquery =  "INSERT INTO account_approval (IDnumber, email, password, first_name, last_name) VALUES('$sid','$email','$hashed_password','$fname','$lname')";
-            mysqli_query($conn,$insertquery);
-            echo "<script> alert('Registration Successful!! Go to the library to verify your account before entering the premise.'); </script>";
-        }
-        else{
-            echo "<script> alert('Password Does Not Match'); </script>";
-        }
+        $name = false;
     }
+
+
+    if ($name != false) {
+        
+        //SENDING OF OTP
+
+
+    } else {
+        echo "<script> alert('NOT ADU EMAIL'); </script>";
+    }
+
 
 }
 
@@ -57,6 +56,12 @@ if(isset($_POST["regis"])){
             </div>
             <div class="register-form col-lg-6 rounded-5 border-0 shadow">
                 <div class="col-lg-8 register-frame">
+                    
+                    <div class="row logo-container d-flex justify-content-center mt-4">
+                        <div class="col-lg-3 d-flex justify-content-center">
+                            <img class="logo" src="../Pictures/user log 2.png" alt="logo">
+                        </div>
+                    </div>
 
                     <div class="row register-text d-flex justify-content-center">
                         <div class="col-lg-3 d-flex justify-content-center">
@@ -67,12 +72,6 @@ if(isset($_POST["regis"])){
                     <div class="row d-flex justify-content-center">
                         <div class="col-lg-3 d-flex justify-content-center">
                             <form action="" method="post" autocomplete="off">
-                                <label class="input-text" for="firstname">FIRST NAME</label><br>
-                                <input class="input-firstname format" type="text" id="firstname" name="firstname" required>
-                                <label class="input-text" for="lastname">LAST NAME</label><br>
-                                <input class="input-lastname format" type="text" id="lastname" name="lastname" required>
-                                <label class="input-text" for="ID">ID NUMBER</label><br>
-                                <input class="input-ID format" type="text" id="sID" name="sID" required>
                                 <label class="input-text" for="email">EMAIL ADDRESS</label><br>
                                 <input class="input-email format" type="text" id="email" name="email" required>
                                 <label class="input-text" for="password">PASSWORD</label><br>

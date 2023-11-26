@@ -9,18 +9,16 @@ if(isset($_POST["login"])){
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $result = mysqli_query($conn, "SELECT * FROM account WHERE email = '$email'");
+    $result = mysqli_query($conn, "SELECT * FROM lib_acc WHERE email = '$email'");
     $row = mysqli_fetch_assoc($result);
 
     if(mysqli_num_rows($result) > 0){
         if(password_verify($password, $row["password"])){
+            
             $_SESSION["login"] = true;
-            $_SESSION["accountID"] = $row["accountID"];
-            $_SESSION["idnumber"] = $row["idnumber"];
-            $_SESSION["IDnumber"] = $row["IDnumber"];
+            $_SESSION["accountID"] = $row["librarianID"];
             $_SESSION["email"] = $row["email"];
-            $_SESSION["first_name"] = $row["first_name"];
-            $_SESSION["last_name"] = $row["last_name"];
+            $_SESSION["name"] = $row["name"];
             $_SESSION["typeID"] = $row["typeID"];
 
             header("Location: landing.php");
@@ -30,7 +28,24 @@ if(isset($_POST["login"])){
         }
     }
     else{
-        echo "<script> alert('Email Not Registered'); </script>";
+        $cresult = mysqli_query($conn, "SELECT * FROM patron_acc WHERE email = '$email'");
+        $crow = mysqli_fetch_assoc($cresult);
+
+        if(mysqli_num_rows($cresult) > 0){
+            if(password_verify($password, $crow["password"])){
+                
+                $_SESSION["login"] = true;
+                $_SESSION["accountID"] = $row["patronID"];
+                $_SESSION["email"] = $row["email"];
+                $_SESSION["name"] = $row["pt_name"];
+                $_SESSION["course"] = $row["course"];
+
+                header("Location: patron_landing.php");
+            }
+        }
+        else{
+            echo "<script> alert('Account Not Found'); </script>";
+        }
     }
 }
 

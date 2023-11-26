@@ -1,10 +1,14 @@
 <?php
 
     require 'config.php';
+    
+    if(empty($_SESSION["accountID"])){
+        header("Location: login.php");
+    }
 
-    if($_SESSION["typeID"] == 4){ 
+    if(empty($_SESSION["typeID"])){ 
       header("Location: patron_landing.php");
-  }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">

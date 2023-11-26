@@ -1,11 +1,16 @@
 .container-fluid{
     background-color: #e9f6ff;
-    height: 100vh;
+    height: 100%;
 }
 
 .register{
     padding: 10%;
     padding-top: 7%;
+}
+
+.logo{
+    height: 70px;
+    width: 70px;
 }
 
 .register-sign{
@@ -15,7 +20,7 @@
 
 .register-form{
     background-color: #ffffff;
-    height: 70vh;
+    height: 60vh;
 }
 
 .register-text{
