@@ -1,11 +1,22 @@
 <?php 
 require 'config.php';
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+//Import PHPMailer classes into the global namespace
+//These must be at the top of your script, not inside a function
+require 'PHPMailer\src\PHPMailer.php';
+require 'PHPMailer\src\SMTP.php';
+require 'PHPMailer\src\Exception.php';
+
+
 if(!empty($_SESSION["accountID"])){
     header("Location: catalog.php");
 }
 
 if(isset($_POST["regis"])){
+    $mail = new PHPMailer(true);
     $email = trim($_POST["email"]);
     $name = "";
     $password = $_POST["password"];
@@ -23,10 +34,46 @@ if(isset($_POST["regis"])){
         $name = false;
     }
 
+    if(isset($_POST["regis"])){
+        
+    }
 
     if ($name != false) {
+
+        $otp = rand(100000, 999999);
+        $otp_string = "The Verification code for your SCRIBE account is <b>$otp</b>.";
         
-        //SENDING OF OTP
+        try {
+            //Server settings
+            $mail->isSMTP();                                            //Send using SMTP
+            $mail->SMTPAuth   = true;
+            $mail->SMTPSecure = 'ssl';
+            $mail->Host       = 'smtp.gmail.com';               
+            $mail->Port       = 465;
+            $mail->Username   = 'adamson.scribe@gmail.com';                     //SMTP username
+            $mail->Password   = 'cvvvyephugumgkbz';                               //SMTP password
+            
+        
+
+            //Recipients
+            $mail->setFrom('adamson.scribe@gmail.com', 'Adamson SCRIBE');
+            $mail->addAddress($email);     //Add a recipient
+        
+
+            //Content
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = 'SCRIBE Verification Code';
+            $mail->Body    = $otp_string;
+   
+
+            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+            $mail->send();
+            echo "<script> alert('Message has been sent')</script>";
+        } catch (Exception $e) {
+            echo "<script> alert('Message could not be sent. Mailer Error: {$mail->ErrorInfo}')</script>";
+        }
+        
 
 
     } else {
