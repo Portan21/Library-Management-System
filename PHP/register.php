@@ -41,7 +41,7 @@ if(isset($_POST["regis"])){
     if ($name != false) {
 
         $otp = rand(100000, 999999);
-        $otp_string = "The Verification code for your SCRIBE account is <b>$otp</b>.";
+        $otp_string = "The Verification code for your SCRIBE account is: <h1><b>$otp</b></h1>";
         
         try {
             //Server settings
@@ -51,7 +51,7 @@ if(isset($_POST["regis"])){
             $mail->Host       = 'smtp.gmail.com';               
             $mail->Port       = 465;
             $mail->Username   = 'adamson.scribe@gmail.com';                     //SMTP username
-            $mail->Password   = 'cvvvyephugumgkbz';                               //SMTP password
+            $mail->Password   = 'awfktuoyqppofsgb';                               //SMTP password
             
         
 
