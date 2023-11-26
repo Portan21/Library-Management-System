@@ -133,7 +133,7 @@ if(isset($_POST["ret"])){
 
                                         <div class="row qr-text d-flex justify-content-center">
                                             <div class="col-lg-12 d-flex justify-content-center">
-                                                <p id="qr-name" class="qr-sign"><?php echo $_SESSION["first_name"], " " ,$_SESSION["last_name"]; ?></p>
+                                                <p id="qr-name" class="qr-sign"><?php echo $_SESSION["name"]; ?></p>
                                             </div>
                                         </div>
 
@@ -146,8 +146,7 @@ if(isset($_POST["ret"])){
                                         <!-- Borrow button with ID for styling -->
                                         <div class="row d-flex justify-content-center">
                                             <div class="col-lg-3 d-flex justify-content-center">
-                                                <a download href="https://api.qrserver.com/v1/create-qr-code/?size=[250]x[250]&data=<?php echo $_SESSION["first_name"], " " ,
-                                                $_SESSION["last_name"]; ?>&download=1">
+                                                <a download href="https://api.qrserver.com/v1/create-qr-code/?size=[250]x[250]&data=<?php echo $_SESSION["email"] ?>&download=1">
                                                 <input class="download-button format" type="submit" value="DOWNLOAD QR">
                                                 </a>
                                             </div>
@@ -160,9 +159,9 @@ if(isset($_POST["ret"])){
                                 </div>
                             </div>
                             <div class="col-lg-8 dynamic-info">
-                                <p><?php echo $_SESSION["first_name"], " " ,$_SESSION["last_name"]; ?></p>
+                                <p><?php echo $_SESSION["name"]; ?></p>
                                 <p><?php echo $_SESSION["email"]; ?></p>
-                                <p><?php echo $_SESSION["IDnumber"]; ?></p>
+                                <p><?php echo $_SESSION["accountID"]; ?></p>
                             </div>
                         </div>       
                     </div>
@@ -178,7 +177,6 @@ if(isset($_POST["ret"])){
                             <table id="example" class="content-table table-borderless" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th class='px-4 py-2 text-center'>Date</th>
                                         <th class='px-4 py-2 text-center'>Time in</th>
                                         <th class='px-4 py-2 text-center'>Time out</th>
                                     </tr>
@@ -186,16 +184,15 @@ if(isset($_POST["ret"])){
                                 <tbody>
                                 <?php
                                     $accID = $_SESSION["accountID"];
-                                    $result = mysqli_query($conn, "SELECT accountID, entry_time, exit_time
-                                    FROM attendance
-                                    WHERE accountID = '$accID'
-                                    ORDER BY entry_time DESC
+                                    $result = mysqli_query($conn, "SELECT lib_entry, lib_exit
+                                    FROM lib_attendance
+                                    WHERE librarianID = '$accID'
+                                    ORDER BY lib_entry DESC
                                     LIMIT 2;");
                                     while($row = mysqli_fetch_assoc($result)){
                                     echo "<tr>
-                                        <td class='px-4 py-2 text-center'>$row[accountID]</td>
-                                        <td class='px-4 py-2 text-center'>$row[entry_time]</td>
-                                        <td class='px-4 py-2 text-center'>$row[exit_time]</td>
+                                        <td class='px-4 py-2 text-center'>$row[lib_entry]</td>
+                                        <td class='px-4 py-2 text-center'>$row[lib_exit]</td>
                                     </tr>";
                                     }     
                                 ?>
@@ -233,7 +230,7 @@ if(isset($_POST["ret"])){
                                     $accID = $_SESSION["accountID"];
                                     $result = mysqli_query($conn, "SELECT borrow_date,deadline,bookID
                                     FROM borrowed_book
-                                    WHERE borrowerID = '$accID'
+                                    WHERE librarianID = '$accID'
                                     ORDER BY borrow_date DESC
                                     LIMIT 2;");
 
@@ -280,11 +277,11 @@ if(isset($_POST["ret"])){
                                 </thead>
                                 <tbody>
                                 <?php
-                                    $result = mysqli_query($conn, "SELECT borrowID, a.first_name AS bf_name, a.last_name AS bl_name, ac.first_name AS lf_name, ac.last_name AS ll_name, book_name, deadline, bb.borrow_date AS borrow_date FROM borrowed_book bb
+                                    $result = mysqli_query($conn, "SELECT borrowID, book_name, deadline, bb.borrow_date AS borrow_date FROM borrowed_book bb
                                     INNER JOIN book b on bb.bookID = b.bookID
-                                    INNER JOIN account a on bb.borrowerID = a.accountID
-                                    INNER JOIN account ac on bb.librarianID = ac.accountID
-                                    WHERE deadline < '$currentDateTime' AND bb.borrowerID = $id
+                                    INNER JOIN lib_acc a on bb.librarianID = a.librarianID
+                                    INNER JOIN lib_acc ac on bb.librarianID = ac.librarianID
+                                    WHERE deadline < '$currentDateTime' AND bb.librarianID = $id
                                     ORDER BY deadline DESC
                                     LIMIT 1");
                                     while($row = mysqli_fetch_assoc($result)){
