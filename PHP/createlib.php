@@ -1,9 +1,6 @@
 <?php 
 
 require 'config.php';
-if(empty($_SESSION["accountID"])){
-    header("Location: login.php");
-}
 
 if($_SESSION["typeID"] == 4){
     header("Location: catalog.php");
