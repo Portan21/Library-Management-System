@@ -3,7 +3,7 @@
 require 'config.php';
 
 if(!empty($_SESSION["accountID"])){
-    header("Location: catalog.php");
+    header("Location: catalogs.php");
 }
 
 if(isset($_POST["login"])){
@@ -16,11 +16,11 @@ if(isset($_POST["login"])){
     if(mysqli_num_rows($result) > 0){
         if(password_verify($password, $row["password"])){
             
-            $_SESSION["login"] = true;
             $_SESSION["accountID"] = $row["librarianID"];
             $_SESSION["email"] = $row["email"];
             $_SESSION["name"] = $row["name"];
             $_SESSION["typeID"] = $row["typeID"];
+            $_SESSION["login"] = true;
 
             header("Location: landing.php");
         }
@@ -35,11 +35,11 @@ if(isset($_POST["login"])){
         if(mysqli_num_rows($cresult) > 0){
             if(password_verify($password, $crow["password"])){
                 
+                $_SESSION["accountID"] = $crow["patronID"];
+                $_SESSION["email"] = $crow["email"];
+                $_SESSION["name"] = $crow["pt_name"];
+                $_SESSION["course"] = $crow["course"];
                 $_SESSION["login"] = true;
-                $_SESSION["accountID"] = $row["patronID"];
-                $_SESSION["email"] = $row["email"];
-                $_SESSION["name"] = $row["pt_name"];
-                $_SESSION["course"] = $row["course"];
 
                 header("Location: patron_landing.php");
             }
