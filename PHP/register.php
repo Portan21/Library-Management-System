@@ -12,7 +12,7 @@ require 'PHPMailer\src\Exception.php';
 
 
 if(!empty($_SESSION["accountID"])){
-    header("Location: catalog.php");
+    header("Location: landing.php");
 }
 
 if(isset($_POST["regis"])){
@@ -49,7 +49,7 @@ if(isset($_POST["regis"])){
                     $otp = rand(100000, 999999);
                     $otp_string = "The Verification code for your SCRIBE account is: <h1><b>$otp</b></h1>";
 
-                    $insertquery = "UPDATE account_approval SET code = '$otp' WHERE email = '$email'";
+                    $insertquery = "UPDATE account_approval SET code = '$otp', password = '$hashed_password', course = '$course' WHERE email = '$email'";
                     mysqli_query($conn,$insertquery);
 
                     //dtldbwzroixdlthq
@@ -87,6 +87,9 @@ if(isset($_POST["regis"])){
                 else{
                     echo "<script> alert('Password Does Not Match'); </script>";
                 }
+
+                $_SESSION["verifyemail"] = $email;
+                header("Location: verification.php");
 
             }
             else{
@@ -132,7 +135,9 @@ if(isset($_POST["regis"])){
                         echo "<script> alert('Message could not be sent. Mailer Error: {$mail->ErrorInfo}')</script>";
                         }
 
-                        
+                    $_SESSION["resend"] = '';
+                    $_SESSION["verifyemail"] = $email;
+                    header("Location: verification.php");
         
                 }
                 else{

@@ -1,6 +1,10 @@
 <?php
 require 'config.php';
 
+if(empty($_SESSION["accountID"])){
+  header("Location: login.php");
+}
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
   if (isset($_POST["bookTitle"])) {
       $bookTitle = $_POST["bookTitle"];
@@ -62,8 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <a class="nav-link active" href="catalogs.php">Catalog</a>
             </li>
 	    <?php
-        $acctype = $_SESSION["typeID"];
-	    if($acctype != 4){
+	    if(!empty($_SESSION["typeID"])){
 	    echo"
             <li class='nav-item'>
             <a class='nav-link' href='approval.php'>Approval</a>

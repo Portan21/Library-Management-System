@@ -7,7 +7,7 @@ if(empty($_SESSION["accountID"])){
 }
 
 if(empty($_SESSION["typeID"])){
-    header("Location: catalog.php");
+    header("Location: catalogs.php");
 }
 else{
     if($_SESSION["typeID"] == 3){
