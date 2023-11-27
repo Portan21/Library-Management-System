@@ -146,7 +146,7 @@ if(isset($_POST["ret"])){
 
                                         <div class="row qr-text d-flex justify-content-center">
                                             <div class="col-lg-12 d-flex justify-content-center">
-                                                <p id="qr-name" class="qr-sign"><?php echo $_SESSION["name"]; ?></p>
+                                                <p id="qr-name" class="qr-sign"><?php echo $_SESSION["email"]; ?></p>
                                             </div>
                                         </div>
 
