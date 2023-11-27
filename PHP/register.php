@@ -18,6 +18,7 @@ if(!empty($_SESSION["accountID"])){
 if(isset($_POST["regis"])){
     $mail = new PHPMailer(true);
     $email = trim($_POST["email"]);
+    $course = $_POST["course"];
     $name = "";
     $password = $_POST["password"];
     $confirmpassword = $_POST["confirmpassword"];
@@ -34,50 +35,116 @@ if(isset($_POST["regis"])){
         $name = false;
     }
 
-    if(isset($_POST["regis"])){
-        
-    }
-
     if ($name != false) {
 
-        $otp = rand(100000, 999999);
-        $otp_string = "The Verification code for your SCRIBE account is: <h1><b>$otp</b></h1>";
-        
-        try {
-            //Server settings
-            $mail->isSMTP();                                            //Send using SMTP
-            $mail->SMTPAuth   = true;
-            $mail->SMTPSecure = 'ssl';
-            $mail->Host       = 'smtp.gmail.com';               
-            $mail->Port       = 465;
-            $mail->Username   = 'adamson.scribe@gmail.com';                     //SMTP username
-            $mail->Password   = 'awfktuoyqppofsgb';                               //SMTP password
-            
-        
-
-            //Recipients
-            $mail->setFrom('adamson.scribe@gmail.com', 'Adamson SCRIBE');
-            $mail->addAddress($email);     //Add a recipient
-        
-
-            //Content
-            $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'SCRIBE Verification Code';
-            $mail->Body    = $otp_string;
-   
-
-            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-            $mail->send();
-            echo "<script> alert('Message has been sent')</script>";
-        } catch (Exception $e) {
-            echo "<script> alert('Message could not be sent. Mailer Error: {$mail->ErrorInfo}')</script>";
+        $duplicateEmail = mysqli_query($conn, "SELECT email FROM patron_acc WHERE email = '$email'");
+        if(mysqli_num_rows($duplicateEmail) > 0){
+            echo "<script> alert('Email Has Already Been Taken'); </script>";
         }
+        else{
+            $duplicate = mysqli_query($conn, "SELECT email FROM account_approval WHERE email = '$email'");
+            if(mysqli_num_rows($duplicate) > 0){
+                if($password == $confirmpassword){
+                    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                    $otp = rand(100000, 999999);
+                    $otp_string = "The Verification code for your SCRIBE account is: <h1><b>$otp</b></h1>";
+
+                    $insertquery = "UPDATE account_approval SET code = '$otp' WHERE email = '$email'";
+                    mysqli_query($conn,$insertquery);
+
+                    //dtldbwzroixdlthq
+                    try {
+                        //Server settings
+                        $mail->isSMTP();                                            //Send using SMTP
+                        $mail->SMTPAuth   = true;
+                        $mail->SMTPSecure = 'ssl';
+                        $mail->Host       = 'smtp.gmail.com';
+                        $mail->Port       = 465;
+                        $mail->Username   = 'adamson.scribe@gmail.com';                     //SMTP username
+                        $mail->Password   = 'awfktuoyqppofsgb';                               //SMTP password
+
+
+
+                        //Recipients
+                        $mail->setFrom('adamson.scribe@gmail.com', 'Adamson SCRIBE');
+                        $mail->addAddress($email);     //Add a recipient
+
+
+                        //Content
+                        $mail->isHTML(true);                                  //Set email format to HTML
+                        $mail->Subject = 'SCRIBE Verification Code';
+                        $mail->Body    = $otp_string;
+
+
+                        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+                        $mail->send();
+                        echo "<script> alert('Message has been sent')</script>";
+                    } catch (Exception $e) {
+                        echo "<script> alert('Message could not be sent. Mailer Error: {$mail->ErrorInfo}')</script>";
+                    }
+                }
+                else{
+                    echo "<script> alert('Password Does Not Match'); </script>";
+                }
+
+            }
+            else{
+
+                if($password == $confirmpassword){
+                    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                    $otp = rand(100000, 999999);
+                    $otp_string = "The Verification code for your SCRIBE account is: <h1><b>$otp</b></h1>";
         
+                    $insertquery = "INSERT INTO account_approval (email, password, name, course, code) VALUES ('$email', '$hashed_password', '$name', '$course', '$otp')";
+        
+                    mysqli_query($conn,$insertquery);
+                    
+                    
+                    try {
+                        //Server settings
+                        $mail->isSMTP();                                            //Send using SMTP
+                        $mail->SMTPAuth   = true;
+                        $mail->SMTPSecure = 'ssl';
+                        $mail->Host       = 'smtp.gmail.com';
+                        $mail->Port       = 465;
+                        $mail->Username   = 'adamson.scribe@gmail.com';                     //SMTP username
+                        $mail->Password   = 'awfktuoyqppofsgb';                               //SMTP password
+
+
+
+                        //Recipients
+                        $mail->setFrom('adamson.scribe@gmail.com', 'Adamson SCRIBE');
+                        $mail->addAddress($email);     //Add a recipient
+
+
+                        //Content
+                        $mail->isHTML(true);                                  //Set email format to HTML
+                        $mail->Subject = 'SCRIBE Verification Code';
+                        $mail->Body    = $otp_string;
+
+
+                        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+                        $mail->send();
+                        echo "<script> alert('Message has been sent')</script>";
+                    } catch (Exception $e) {
+                        echo "<script> alert('Message could not be sent. Mailer Error: {$mail->ErrorInfo}')</script>";
+                        }
+
+                        
+        
+                }
+                else{
+                    echo "<script> alert('Password Does Not Match'); </script>";
+                }
+
+            }
+        }
 
 
     } else {
-        echo "<script> alert('NOT ADU EMAIL'); </script>";
+        echo "<script> alert('Use an Adamson Email for the registration.'); </script>";
     }
 
 
@@ -121,6 +188,8 @@ if(isset($_POST["regis"])){
                             <form action="" method="post" autocomplete="off">
                                 <label class="input-text" for="email">EMAIL ADDRESS</label><br>
                                 <input class="input-email format" type="text" id="email" name="email" required>
+                                <label class="input-text" for="course">COURSE</label><br>
+                                <input class="input-course format" type="text" id="course" name="course" required>
                                 <label class="input-text" for="password">PASSWORD</label><br>
                                 <input class="input-password format" type="password" id="password" name="password" required>
                                 <label class="input-text" for="confirmpassword">CONFIRM PASSWORD</label><br>

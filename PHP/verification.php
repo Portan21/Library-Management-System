@@ -1,3 +1,17 @@
+<?php
+require 'config.php';
+
+if(!empty($_SESSION["accountID"])){
+    header("Location: catalog.php");
+}
+
+
+$verifyemail = $_SESSION["verifyemail"];
+
+
+
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,10 +91,10 @@
 
     <div class="modal">
         <h2 style="font-size: 36px;font-family: Arial, Helvetica, sans-serif; ">VERIFICATION</h2>
-        <p style = "text-align: justify; margin-bottom: 15px;font-family: Arial, Helvetica, sans-serif;">SCRIBE sent a verification code to sample@adamson.edu.ph for verification.</p>
-        <p style = "text-align: justify; margin-bottom: 15px;font-family: Arial, Helvetica, sans-serif;">Please check your inbox and enter the verification code below to verify your email address.</p>
+        <p style = "margin-bottom: 15px;font-family: Arial, Helvetica, sans-serif;">SCRIBE sent a verification code to <b><?php echo $verifyemail ?></b> for verification.</p>
+        <p style = "margin-bottom: 15px;font-family: Arial, Helvetica, sans-serif;">Please check your inbox and enter the verification code below to verify your email address.</p>
         <input type="text" placeholder="Verification Code" id="verificationCode">
-        <p class="resend-code" onclick="resendCode()">Didn't receive the code? Resend Code</p>
+        <p class="resend-code" onclick="resendCode()">Didn't receive the code? Resend Code.</p>
         <br>
         <button onclick="submitVerification()">Submit</button>
     </div>
