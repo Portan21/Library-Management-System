@@ -10,10 +10,10 @@
     }
 
     date_default_timezone_set('Asia/Manila'); // Set the time zone to Philippines
-$currentDateTime = date('Y-m-d H:i:s');
+    $currentDateTime = date('Y-m-d H:i:s');
 
-date_default_timezone_set('Asia/Manila'); // Set the time zone to Philippines
-$currentDate = new DateTime();
+    date_default_timezone_set('Asia/Manila'); // Set the time zone to Philippines
+    $currentDate = new DateTime();
 
 if(isset($_POST["ret"])){
     $borrowID = $_POST["borrowID"];
@@ -121,7 +121,20 @@ if(isset($_POST["ret"])){
                             <div class="col-lg-4 static-info">
                                 <p class="static-text">Name</p>
                                 <p class="static-text">Email</p>
-                                <p class="static-text">ID Number</p>
+                                <p class="static-text">
+                                <?php
+                                if($_SESSION["typeID"] > 0){
+                                    $accID = $_SESSION["accountID"];
+                                    $result = mysqli_query($conn, "SELECT nameType
+                                    FROM account_type a JOIN lib_acc l ON a.type_ID = l.typeID
+                                    WHERE librarianID = '$accID'");
+                                    $row = mysqli_fetch_assoc($result);
+                                    echo "Account Type";}
+                                else{
+                                    echo "Course";
+                                }
+                                ?>   
+                                </p>
                                 <div class="col-lg-3">
                                 <a href='#'>
                                 <input class="view-button" type="submit" value="View QR">
@@ -161,7 +174,23 @@ if(isset($_POST["ret"])){
                             <div class="col-lg-8 dynamic-info">
                                 <p><?php echo $_SESSION["name"]; ?></p>
                                 <p><?php echo $_SESSION["email"]; ?></p>
-                                <p><?php echo $_SESSION["accountID"]; ?></p>
+                                <p><?php
+                                if($_SESSION["typeID"] > 0){
+                                    $accID = $_SESSION["accountID"];
+                                    $result = mysqli_query($conn, "SELECT nameType
+                                    FROM account_type a JOIN lib_acc l ON a.type_ID = l.typeID
+                                    WHERE librarianID = '$accID'");
+                                    $row = mysqli_fetch_assoc($result);
+                                    echo $row['nameType'];}
+                                else{
+                                    $accID = $_SESSION["accountID"];
+                                    $result = mysqli_query($conn, "SELECT course
+                                    FROM patron_acc
+                                    WHERE patronID = '$accID'");
+                                    $row = mysqli_fetch_assoc($result);
+                                    echo $row['course'];}
+                                ?>   
+                                </p>
                             </div>
                         </div>       
                     </div>
@@ -183,18 +212,34 @@ if(isset($_POST["ret"])){
                                 </thead>
                                 <tbody>
                                 <?php
-                                    $accID = $_SESSION["accountID"];
-                                    $result = mysqli_query($conn, "SELECT lib_entry, lib_exit
-                                    FROM lib_attendance
-                                    WHERE librarianID = '$accID'
-                                    ORDER BY lib_entry DESC
-                                    LIMIT 2;");
-                                    while($row = mysqli_fetch_assoc($result)){
-                                    echo "<tr>
-                                        <td class='px-4 py-2 text-center'>$row[lib_entry]</td>
-                                        <td class='px-4 py-2 text-center'>$row[lib_exit]</td>
-                                    </tr>";
-                                    }     
+                                    if($_SESSION["typeID"] > 0){
+                                        $accID = $_SESSION["accountID"];
+                                        $result = mysqli_query($conn, "SELECT lib_entry, lib_exit
+                                        FROM lib_attendance
+                                        WHERE librarianID = '$accID'
+                                        ORDER BY lib_entry DESC
+                                        LIMIT 2;");
+                                        while($row = mysqli_fetch_assoc($result)){
+                                        echo "<tr>
+                                            <td class='px-4 py-2 text-center'>$row[lib_entry]</td>
+                                            <td class='px-4 py-2 text-center'>$row[lib_exit]</td>
+                                        </tr>";
+                                        }     
+                                    }  
+                                    else{
+                                        $accID = $_SESSION["accountID"];
+                                        $result = mysqli_query($conn, "SELECT pt_entry, pt_exit
+                                        FROM patron_attendance
+                                        WHERE patronID = '$accID'
+                                        ORDER BY pt_entry DESC
+                                        LIMIT 2;");
+                                        while($row = mysqli_fetch_assoc($result)){
+                                        echo "<tr>
+                                            <td class='px-4 py-2 text-center'>$row[pt_entry]</td>
+                                            <td class='px-4 py-2 text-center'>$row[pt_exit]</td>
+                                        </tr>";
+                                        }     
+                                    }
                                 ?>
                                 </tbody>
                             </table>
@@ -227,28 +272,30 @@ if(isset($_POST["ret"])){
                                 </thead>
                                 <tbody>
                                 <?php
-                                    $accID = $_SESSION["accountID"];
-                                    $result = mysqli_query($conn, "SELECT borrow_date,deadline,bookID
-                                    FROM borrowed_book
-                                    WHERE librarianID = '$accID'
-                                    ORDER BY borrow_date DESC
-                                    LIMIT 2;");
+                                    if($_SESSION["typeID"] > 0){
+                                        $accID = $_SESSION["accountID"];
+                                        $result = mysqli_query($conn, "SELECT borrow_date,deadline,bookID
+                                        FROM borrowed_book
+                                        WHERE patronID = '$accID'
+                                        ORDER BY borrow_date DESC
+                                        LIMIT 2;");
 
-                                    while($row = mysqli_fetch_assoc($result)){
+                                        while($row = mysqli_fetch_assoc($result)){
 
-                                        $booknumber = $row["bookID"];
-                                        $result2 = mysqli_query($conn, "SELECT book_name
-                                        FROM book
-                                        WHERE bookID = '$booknumber';");
+                                            $booknumber = $row["bookID"];
+                                            $result2 = mysqli_query($conn, "SELECT book_name
+                                            FROM book
+                                            WHERE bookID = '$booknumber';");
 
-                                        $row2 = mysqli_fetch_assoc($result2);
+                                            $row2 = mysqli_fetch_assoc($result2);
 
-                                        echo "<tr>
-                                            <td class='px-4 py-2 text-center'>$row[borrow_date]</td>
-                                            <td class='px-4 py-2 text-center'>$row[deadline]</td>
-                                            <td class='px-4 py-2 text-center'>$row2[book_name]</td>
-                                        </tr>";
-                                    }     
+                                            echo "<tr>
+                                                <td class='px-4 py-2 text-center'>$row[borrow_date]</td>
+                                                <td class='px-4 py-2 text-center'>$row[deadline]</td>
+                                                <td class='px-4 py-2 text-center'>$row2[book_name]</td>
+                                            </tr>";
+                                        }     
+                                    }
                                 ?>
                                 </tbody>
                             </table>
