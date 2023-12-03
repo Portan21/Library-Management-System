@@ -16,7 +16,7 @@ if(isset($_GET["rejreq"]) && isset($_GET["rejbook"])){
     $rejbook = $_GET["rejbook"];
     
     //DELETE FROM book_request
-    $delquery = "DELETE FROM book_request WHERE borrowerID = $rejreq AND bookID = $rejbook";
+    $delquery = "DELETE FROM book_request WHERE patronID = $rejreq AND bookID = $rejbook";
     //Exec query
     if(mysqli_query($conn, $delquery)){
         

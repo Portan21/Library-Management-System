@@ -101,7 +101,7 @@ font-family: sans-serif;
     color: #a8e0ff;
 }
 
-#borrow-button {
+#borrowbutton {
   background-color: #ffcc00d1; /* Yellow background color */
   color: #000000; /* Black text color */
   padding: 10px 20px;
@@ -117,7 +117,7 @@ font-family: sans-serif;
 
 }
 
-#borrow-button:hover {
+#borrowbutton:hover {
   transform: scale(1.1); /* Enlarge the button on hover */
 }
 

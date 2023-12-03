@@ -7,8 +7,8 @@ else{
     $id = $_SESSION["accountID"];
 }
 
-if($_SESSION["typeID"] == 4){
-    header("Location: catalog.php");
+if(empty($_SESSION["typeID"])){
+    header("Location: catalogs.php");
 }
 
 date_default_timezone_set('Asia/Manila'); // Set the time zone to Philippines
@@ -34,17 +34,26 @@ if(isset($_POST["ret"])){
         $totalpenalty = $totaldays * 10;
         
         
-        $insquery = "INSERT INTO returned_book (bookID, borrowerID, librarianID, borrow_date, return_date, penalty_paid)
-        SELECT bookID, borrowerID, $id, borrow_date, '$currentDateTime', '$totalpenalty'
+        $insquery = "INSERT INTO returned_book (bookID, patronID, librarianID, borrow_date, return_date, penalty_paid)
+        SELECT bookID, patronID, $id, borrow_date, '$currentDateTime', '$totalpenalty'
         FROM borrowed_book
         WHERE borrowID = $borrowID";
+        
         if(mysqli_query($conn, $insquery)){
-            $delquery = "DELETE FROM borrowed_book WHERE borrowID = $borrowID";
-            if(mysqli_query($conn, $delquery)){
+            // Insert was successful, now update the book availability
+            $updatequery = "UPDATE book SET availability = '1' WHERE bookID IN (SELECT bookID FROM borrowed_book WHERE borrowID = $borrowID)";
+            
+            if (mysqli_query($conn, $updatequery)) {
+                $delquery = "DELETE FROM borrowed_book WHERE borrowID = $borrowID";
+                if(mysqli_query($conn, $delquery)){
+                }
+                else{
+                    echo "<script>alert('Deleting error');</script>";
+                }
+            } else {
+                echo "<script>alert('Update error');</script>";
             }
-            else{
-                echo"<script>alert('DELETING ERROR');</script>";
-            }
+            
         }
 
         //echo"<script>alert('Total Penalty: ₱$totalpenalty.00');</script>";
@@ -120,10 +129,10 @@ if(isset($_POST["ret"])){
             <tbody>
             <?php
             
-            $result = mysqli_query($conn, "SELECT borrowID, a.first_name AS bf_name, a.last_name AS bl_name, ac.first_name AS lf_name, ac.last_name AS ll_name, book_name, deadline, bb.borrow_date AS borrow_date FROM borrowed_book bb
+            $result = mysqli_query($conn, "SELECT borrowID, a.pt_name AS bf_name, ac.name AS lf_name, book_name, deadline, bb.borrow_date AS borrow_date FROM borrowed_book bb
             INNER JOIN book b on bb.bookID = b.bookID
-            INNER JOIN account a on bb.borrowerID = a.accountID
-            INNER JOIN account ac on bb.librarianID = ac.accountID
+            INNER JOIN patron_acc a on bb.patronID = a.patronID
+            INNER JOIN lib_acc ac on bb.librarianID = ac.librarianID
             WHERE deadline < '$currentDateTime'");
             while($row = mysqli_fetch_assoc($result)){
                 $brwdate = new DateTime($row["borrow_date"]);
@@ -141,7 +150,7 @@ if(isset($_POST["ret"])){
                         <div class='container'>
                             <div class='row border border-secondary rounded mt-1 mb-1'>
                                 <div class='col-5 text-break mt-1 mb-1 '>
-                                        <h3 class='text-uppercase mb-0'>$row[bf_name] $row[bl_name]</h3>
+                                        <h3 class='text-uppercase mb-0'>$row[bf_name]</h3>
                                         <a>$row[book_name]</a><br>
                                 </div>
                                 

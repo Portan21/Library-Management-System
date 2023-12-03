@@ -7,8 +7,8 @@ else{
     $id = $_SESSION["accountID"];
 }
 
-if($_SESSION["typeID"] == 4){
-    header("Location: catalog.php");
+if(empty($_SESSION["typeID"])){
+    header("Location: catalogs.php");
 }
 
 date_default_timezone_set('Asia/Manila'); // Set the time zone to Philippines
@@ -17,17 +17,28 @@ $currentDateTime = date('Y-m-d H:i:s');
 if(isset($_POST["ret"])){
     $borrowID = $_POST["borrowID"];
 
-    $insquery = "INSERT INTO returned_book (bookID, borrowerID, librarianID, borrow_date, return_date, penalty_paid)
-    SELECT bookID, borrowerID, $id, borrow_date, '$currentDateTime', 0
+    $insquery = "INSERT INTO returned_book (bookID, patronID, librarianID, borrow_date, return_date, penalty_paid)
+    SELECT bookID, patronID, $id, borrow_date, '$currentDateTime', 0
     FROM borrowed_book
     WHERE borrowID = $borrowID";
+
     if(mysqli_query($conn, $insquery)){
-        $delquery = "DELETE FROM borrowed_book WHERE borrowID = $borrowID";
-        if(mysqli_query($conn, $delquery)){
+        // Insert was successful, now update the book availability
+        $updatequery = "UPDATE book SET availability = '1' WHERE bookID IN (SELECT bookID FROM borrowed_book WHERE borrowID = $borrowID)";
+        
+        if (mysqli_query($conn, $updatequery)) {
+            // The update was successful, now proceed with the delete query
+            $delquery = "DELETE FROM borrowed_book WHERE borrowID = $borrowID";
+            
+            if(mysqli_query($conn, $delquery)){
+            }
+            else{
+                echo "<script>alert('Deleting error');</script>";
+            }
+        } else {
+            echo "<script>alert('Update error');</script>";
         }
-        else{
-            echo"<script>alert('DELETING ERROR');</script>";
-        }
+
     }
 }
 ?>
@@ -99,25 +110,28 @@ if(isset($_POST["ret"])){
             <tbody>
             <?php
             
-            $result = mysqli_query($conn, "SELECT borrowID, a.first_name AS bf_name, a.last_name AS bl_name, ac.first_name AS lf_name, ac.last_name AS ll_name, book_name, deadline FROM borrowed_book bb
+            $result = mysqli_query($conn, "SELECT borrowID, a.pt_name AS bf_name, ac.name AS lf_name, book_name, deadline FROM borrowed_book bb
             INNER JOIN book b on bb.bookID = b.bookID
-            INNER JOIN account a on bb.borrowerID = a.accountID
-            INNER JOIN account ac on bb.librarianID = ac.accountID
+            INNER JOIN patron_acc a on bb.patronID = a.patronID
+            INNER JOIN lib_acc ac on bb.librarianID = ac.librarianID
             WHERE deadline >= '$currentDateTime'");
+
             while($row = mysqli_fetch_assoc($result)){
                 echo 
                 "<tr>
                     <td class='px-4 py-2'>
                         <div class='container'>
+
                             <div class='row border border-secondary rounded mt-1 mb-1'>
                                 <div class='col-4 text-break mt-1 mb-1 '>
                                         <h3 class='text-uppercase mb-0'>$row[book_name]</h3>
-                                        <a>$row[bf_name] $row[bl_name]</a><br>
+                                        <a>Borrowed by: $row[bf_name]</a><br>
                                 </div>
                                 
                                 <div class='col-4 text-break mt-1 mb-1'>
+                                        <a><b>Deadline:</b></a><br>
                                         <h3 class='text-uppercase mb-0'>$row[deadline]</h3>
-                                        <a>$row[lf_name] $row[ll_name]</a><br>
+                                        <a>Approved by: $row[lf_name]</a><br>
                                 </div>
 
                                 <div class='col-4 d-flex justify-content-end align-items-center'>
@@ -130,6 +144,7 @@ if(isset($_POST["ret"])){
                                 </div>
 
                             </div>
+
                         </div>
                     </td>
                 </tr>";
@@ -139,6 +154,7 @@ if(isset($_POST["ret"])){
         </table>
         </div>
     </div>
+    
     <script>
     function confirmReturn() {
         return confirm('Press "OK" to confirm the book return. Press "Cancel" otherwise.');
@@ -147,6 +163,6 @@ if(isset($_POST["ret"])){
     <script src = "https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src = "https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src = "https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    <script src = "./JavaScript/app2.js"></script>
+    <script src = "../JavaScript/app2.js"></script>
 </body>
 </html>
