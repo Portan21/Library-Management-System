@@ -10,17 +10,10 @@ if(empty($_SESSION["bookTitle"])){
 }
 else{
     $title = $_SESSION["bookTitle"];
-    echo "<script> alert('$title'); </script>";
 }
-//ADD NO LIBRARIAN
 
-if(isset($_GET['bookTitle'])) {
-    // Retrieve the value from the URL
-    $bookTitle = $title;
+//ADD NO LIBRARIAN ALLOWED
 
-    // Use the $bookTitle variable as needed, for example, display it
-    echo "<script> alert('$bookTitle'); </script>";
-}
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
   if (isset($_POST["submit"])) {
@@ -45,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           }
         }
         // For example, you can insert it into a database or perform any other necessary action.
-        echo "<script> alert('Book:$bookTitle Borrowing Request Sent. Head to the Library WITHIN THE DAY to confirm your request and claim the book.'); </script>"; // You can provide a response if needed.
+        echo "<script> alert('Book:$bookTitle Borrowing Request Sent. Head to the Library to confirm your request and claim the book.'); </script>"; // You can provide a response if needed.
       }
       else{
         echo "<script> alert('Book:$bookTitle Currently Unavailable. Try borrowing another book.'); </script>";
@@ -124,9 +117,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="row mt-3">
             <div class="col-md-8 mb-3">
-                <h1 class="text-uppercase">Title</h1>
-                <h4 class="text-uppercase">Author</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <?php
+                    $escapedTitle = mysqli_real_escape_string($conn, $title);
+                    $result = mysqli_query($conn, "SELECT bookID, book_name, author, description FROM book WHERE book_name = '$escapedTitle'");
+        
+                    while($row = mysqli_fetch_assoc($result)){
+                        $bookID = $row['bookID'];
+                        $author = $row['author'];
+                        $description = $row['description'];
+                    }
+                ?>
+                <h1 class="text-uppercase"><?php echo $title ?></h1>
+                <h4 class="text-uppercase"><?php echo $author ?></h4>
+                <p><?php echo $description ?></p>
             
             </div>
             <div class="col-md-4 mb-5">
@@ -135,10 +138,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 
                 <form action="" method="post" autocomplete="off">
                     <a>TITLE</a>
-                    <h4 class="mb-3 text-uppercase">BOOK_TITLE</h4>
+                    <h4 class="mb-3 text-uppercase"><?php echo $title ?></h4>
 
                     <a>AUTHOR</a>
-                    <h4 class="mb-3 text-uppercase">AUTHOR_NAME</h4>
+                    <h4 class="mb-3 text-uppercase"><?php echo $author ?></h4>
 
                     <a>DURATION OF BORROWING</a>
                     <div class="row mb-4">

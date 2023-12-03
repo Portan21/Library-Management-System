@@ -10,27 +10,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       $bookTitle = $_POST["bookTitle"];
       $accountid = $_SESSION["accountID"];
 
-      $result = mysqli_query($conn, "SELECT bookID, availability FROM book WHERE book_name = '$bookTitle'");
-      $row = mysqli_fetch_assoc($result);
+      $_SESSION["bookTitle"] = $bookTitle;
 
-      $bookid = $row["bookID"];
-      $availability = $row["availability"];
-
-      if($availability == 1){
-        $reqquery = "INSERT INTO book_request(borrowerID, bookID) VALUES('$accountid','$bookid')";
-        if(mysqli_query($conn,$reqquery)){
-          // Update the 'book' table
-          $updatequery = "UPDATE book SET availability = '2' WHERE bookID = '$bookid'";
-          if (mysqli_query($conn, $updatequery)) {
-              // The update was successful
-          }
-        }
-        // For example, you can insert it into a database or perform any other necessary action.
-        echo "<script> alert('Book:$bookTitle Borrowing Request Sent. Head to the Library WITHIN THE DAY to confirm your request and claim the book.'); </script>"; // You can provide a response if needed.
-      }
-      else{
-        echo "<script> alert('Book:$bookTitle Currently Unavailable. Try borrowing another book.'); </script>";
-      }
+      
+      header("Location: bookdetail.php");
 
 
   } else {
