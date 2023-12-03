@@ -19,7 +19,7 @@
             <div class="reader-form col-lg-6 rounded-5 border-0 shadow">
                 <div class="col-lg-8 reader-frame">
                     <div id="reader" width="600px"></div>
-                    <div id="scannedName">Name: 
+                    <div id="scannedName"><b>Name: 
                     </div>
                 </div>
             </div>

@@ -106,6 +106,7 @@ if(isset($_POST["ret"])){
             </li>
         </ul>
     </div>
+    </div>
     </nav>
     <div class="container-fluid-profile">
         <div class="row profile">
@@ -159,7 +160,7 @@ if(isset($_POST["ret"])){
                                         <!-- Borrow button with ID for styling -->
                                         <div class="row d-flex justify-content-center">
                                             <div class="col-lg-3 d-flex justify-content-center">
-                                                <a download href="https://api.qrserver.com/v1/create-qr-code/?size=[250]x[250]&data=<?php echo $_SESSION["email"] ?>&download=1">
+                                                <a download href="https://api.qrserver.com/v1/create-qr-code/?size=[250]x[250]&data=<?php echo $_SESSION["email"] ?>&margin=15&download=1">
                                                 <input class="download-button format" type="submit" value="DOWNLOAD QR">
                                                 </a>
                                             </div>
@@ -206,6 +207,7 @@ if(isset($_POST["ret"])){
                             <table id="example" class="content-table table-borderless" style="width:100%">
                                 <thead>
                                     <tr>
+                                        <th class='px-4 py-2 text-center'>Date</th>
                                         <th class='px-4 py-2 text-center'>Time in</th>
                                         <th class='px-4 py-2 text-center'>Time out</th>
                                     </tr>
@@ -217,13 +219,17 @@ if(isset($_POST["ret"])){
                                         $result = mysqli_query($conn, "SELECT lib_entry, lib_exit
                                         FROM lib_attendance
                                         WHERE librarianID = '$accID'
-                                        ORDER BY lib_entry DESC
+                                        ORDER BY lib_attendanceID DESC
                                         LIMIT 2;");
                                         while($row = mysqli_fetch_assoc($result)){
-                                        echo "<tr>
-                                            <td class='px-4 py-2 text-center'>$row[lib_entry]</td>
-                                            <td class='px-4 py-2 text-center'>$row[lib_exit]</td>
-                                        </tr>";
+                                            $date = substr("$row[lib_entry]", 0, 10);
+                                            $timeIN = substr("$row[lib_entry]", -8);
+                                            $timeOUT = substr("$row[lib_exit]", -8);
+                                            echo "<tr>
+                                                <td class='px-4 py-2 text-center'>$date</td>
+                                                <td class='px-4 py-2 text-center'>$timeIN</td>
+                                                <td class='px-4 py-2 text-center'>$timeOUT</td>
+                                            </tr>";
                                         }     
                                     }  
                                     else{
@@ -231,19 +237,23 @@ if(isset($_POST["ret"])){
                                         $result = mysqli_query($conn, "SELECT pt_entry, pt_exit
                                         FROM patron_attendance
                                         WHERE patronID = '$accID'
-                                        ORDER BY pt_entry DESC
+                                        ORDER BY pt_attendanceID DESC
                                         LIMIT 2;");
                                         while($row = mysqli_fetch_assoc($result)){
-                                        echo "<tr>
-                                            <td class='px-4 py-2 text-center'>$row[pt_entry]</td>
-                                            <td class='px-4 py-2 text-center'>$row[pt_exit]</td>
-                                        </tr>";
+                                            $date = substr("$row[pt_entry]", 0, 10);
+                                            $timeIN = substr("$row[pt_entry]", -8);
+                                            $timeOUT = substr("$row[pt_exit]", -8);
+                                            echo "<tr>
+                                                <td class='px-4 py-2 text-center'>$date</td>
+                                                <td class='px-4 py-2 text-center'>$timeIN</td>
+                                                <td class='px-4 py-2 text-center'>$timeOUT</td>
+                                            </tr>";
                                         }     
                                     }
                                 ?>
                                 </tbody>
                             </table>
-                            <a href='attendance.php'>
+                            <a href='attendance-profile.php'>
                                 <input class="view-all format" type="submit" value="View all">
                             </a>
                         </div>

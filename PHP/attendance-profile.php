@@ -72,18 +72,52 @@ require 'config.php';
         </thead>
         <tbody>
             <?php
-                $accID = $_SESSION["accountID"];
-                $result = mysqli_query($conn, "SELECT accountID, entry_time, exit_time
-                FROM attendance
-                WHERE accountID = '$accID'
-                ORDER BY entry_time DESC;");
-                while($row = mysqli_fetch_assoc($result)){
-                echo "<tr>
-                    <td class='px-4 py-2 text-center'>$row[accountID]</td>
-                    <td class='px-4 py-2 text-center'>$row[entry_time]</td>
-                    <td class='px-4 py-2 text-center'>$row[exit_time]</td>
-                </tr>";
-                }     
+                // $accID = $_SESSION["accountID"];
+                // $result = mysqli_query($conn, "SELECT accountID, entry_time, exit_time
+                // FROM attendance
+                // WHERE accountID = '$accID'
+                // ORDER BY entry_time DESC;");
+                // while($row = mysqli_fetch_assoc($result)){
+                // echo "<tr>
+                //     <td class='px-4 py-2 text-center'>$row[accountID]</td>
+                //     <td class='px-4 py-2 text-center'>$row[entry_time]</td>
+                //     <td class='px-4 py-2 text-center'>$row[exit_time]</td>
+                // </tr>";
+                // }     
+                if($_SESSION["typeID"] > 0){
+                    $accID = $_SESSION["accountID"];
+                    $result = mysqli_query($conn, "SELECT lib_entry, lib_exit
+                    FROM lib_attendance
+                    WHERE librarianID = '$accID'
+                    ORDER BY lib_attendanceID DESC;");
+                    while($row = mysqli_fetch_assoc($result)){
+                        $date = substr("$row[lib_entry]", 0, 10);
+                        $timeIN = substr("$row[lib_entry]", -8);
+                        $timeOUT = substr("$row[lib_exit]", -8);
+                        echo "<tr>
+                            <td class='px-4 py-2 text-center'>$date</td>
+                            <td class='px-4 py-2 text-center'>$timeIN</td>
+                            <td class='px-4 py-2 text-center'>$timeOUT</td>
+                        </tr>";
+                    }     
+                }  
+                else{
+                    $accID = $_SESSION["accountID"];
+                    $result = mysqli_query($conn, "SELECT pt_entry, pt_exit
+                    FROM patron_attendance
+                    WHERE patronID = '$accID'
+                    ORDER BY pt_attendanceID DESC;");
+                    while($row = mysqli_fetch_assoc($result)){
+                        $date = substr("$row[pt_entry]", 0, 10);
+                        $timeIN = substr("$row[pt_entry]", -8);
+                        $timeOUT = substr("$row[pt_exit]", -8);
+                        echo "<tr>
+                            <td class='px-4 py-2 text-center'>$date</td>
+                            <td class='px-4 py-2 text-center'>$timeIN</td>
+                            <td class='px-4 py-2 text-center'>$timeOUT</td>
+                        </tr>";
+                    }     
+                }
             ?>
         </tbody>
       </table>
