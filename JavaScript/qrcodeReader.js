@@ -1,34 +1,36 @@
 let shouldPauseVideo = true;
 let showPauseBanner = true;
 
+
 function onScanSuccess(decodedText, decodedResult) {
   // handle the scanned code as you like, for example:
   console.log(`Code matched = ${decodedText}`, decodedResult);
   email = document.getElementById("scannedName");
-  email.innerHTML = `Name: ${decodedText}`, decodedResult;
+  
 
   html5QrcodeScanner.pause(shouldPauseVideo, showPauseBanner);
 
   $.ajax({
 
-    url : 'a.php',
+    url : 'QRcodeReader-Query.php',
     type : 'POST',
     data: {
       email: decodedText // Replace 'your_account_id_here' with the actual account ID
     },
     success : function (result) {
        console.log (result); // Here, you need to use response by PHP file.
+       email.innerHTML = result;
+       setTimeout(resume, 3000);
     },
     error : function () {
        console.log ('error');
     }
 
   });
-
-  setTimeout(resume, 3000);
 }
 
 function resume(){
+  email.innerHTML = "<b>Name: "
   html5QrcodeScanner.resume();
 }
 
