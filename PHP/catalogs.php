@@ -127,7 +127,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <!-- Borrow button with ID for styling -->
     <form id="borrow-form" action="" method="post">
       <input type="hidden" id="book-title-input" name="bookTitle" value="">
-      <button type="submit" id="borrow-button" name="borrow-button">Borrow</button>
+      <?php
+        if(!empty($_SESSION["typeID"])){
+          echo"
+          <div class='text-center'>
+            <button type='submit' id='borrow-button' name='borrow-button' class='btn btn-danger pt-2 pb-2 pl-3 pr-3 text'>EDIT BOOK DETAILS</button>
+          </div>
+          ";
+        }
+        else{
+          echo"
+          <div class='text-center'>
+            <button type='submit' id='borrow-button' name='borrow-button' class='btn btn-warning pt-2 pb-2 pl-3 pr-3 text'>BORROW BOOK</button>
+          </div>
+          ";
+        }
+      ?>
+
     </form>
 
     <!-- Remove button with ID for styling 

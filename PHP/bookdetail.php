@@ -131,12 +131,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <div class="col-md-8 mb-3">
                 <?php
                     $escapedTitle = mysqli_real_escape_string($conn, $title);
-                    $result = mysqli_query($conn, "SELECT bookID, book_name, author, description FROM book WHERE book_name = '$escapedTitle'");
+                    $result = mysqli_query($conn, "SELECT bookID, book_name, author, description, availability FROM book WHERE book_name = '$escapedTitle'");
         
                     while($row = mysqli_fetch_assoc($result)){
                         $bookID = $row['bookID'];
                         $author = $row['author'];
                         $description = $row['description'];
+                        $avail = $row['availability'];
                     }
                 ?>
                 <h1 class="text-uppercase"><?php echo $title ?></h1>
@@ -166,8 +167,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             </select>
                         </div>
                     </div>
-
-                    <button type="submit" name="submit" id="submit" class="btn btn-warning btn-lg mt-2"><b>REQUEST TO BORROW</b></button>
+                    <?php
+                    if($avail == '1'){
+                        echo"
+                            <button type='submit' name='submit' id='submit' class='btn btn-warning btn-lg mt-2'><b>REQUEST TO BORROW</b></button>
+                        ";
+                    }
+                    else{
+                        echo"
+                            <button type='submit' name='submit' id='submit' class='btn btn-warning btn-lg mt-2' disabled><b>REQUEST TO BORROW</b></button>
+                        ";
+                    }
+                    ?>
                 </form>
             </div>
         </div>
