@@ -72,7 +72,14 @@
     <div class="section-title">
     <div class="container_patronCount">
           <h3>Library Management System</h3>
-          <h3>Patron Count: 00</h3>
+          <?php
+            $sql = "SELECT count(patronID) AS count FROM patron_attendance WHERE pt_exit IS NULL";
+            $result = mysqli_query($conn, $sql);
+            $row = mysqli_fetch_assoc($result);
+            $count = $row['count'];
+            echo "<h3>Patron Count: $count</h3>";
+          ?>
+          
           
         </div>
     </div>
