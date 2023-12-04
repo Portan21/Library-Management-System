@@ -261,84 +261,65 @@ if(isset($_POST["ret"])){
                 </div>
             </div>
         </div>
-        <div class="row profile">
-            <div class="profile-container col-lg-12 pt-0">
-                <div class="profile-form profile-form-left col-lg-6 border-0 shadow">
-                    <div class="col-lg-11 profile-frame">
-                        <div class="col-lg-12">
-                            <p class="overview">Borrowed Books</p>
-                            <hr>
-                        </div>
-                        <div class = "container borrowed-books">
-                            <div class ="row">
-                            <table id="example" class="content-table table-borderless" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th class='px-4 py-2 text-center'>Date</th>
-                                        <th class='px-4 py-2 text-center'>Deadline</th>
-                                        <th class='px-4 py-2 text-center'>Title</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <?php
-                                    if(!empty($_SESSION["typeID"])){
-                                        $accID = $_SESSION["accountID"];
-                                        $result = mysqli_query($conn, "SELECT borrow_date,deadline,bookID
-                                        FROM borrowed_book
-                                        WHERE librarianID = '$accID'
-                                        ORDER BY borrow_date DESC
-                                        LIMIT 2;");
+        <?php
+        if(empty($_SESSION["typeID"])){
+            echo "<div class='row profile'>
+                <div class='profile-container col-lg-12 pt-0'>
+                    <div class='profile-form profile-form-left col-lg-6 border-0 shadow'>
+                        <div class='col-lg-11 profile-frame'>
+                            <div class='col-lg-12'>
+                                <p class='overview'>Borrowed Books</p>
+                                <hr>
+                            </div>
+                            <div class = 'container borrowed-books'>
+                                <div class ='row'>
+                                <table id='example' class='content-table table-borderless' style='width:100%'>
+                                    <thead>
+                                        <tr>
+                                            <th class='px-4 py-2 text-center'>Date</th>
+                                            <th class='px-4 py-2 text-center'>Deadline</th>
+                                            <th class='px-4 py-2 text-center'>Title</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>";
+                                        if(empty($_SESSION["typeID"])){   
+                                        }
+                                        else{
+                                            $accID = $_SESSION[accountID];
+                                            $result = mysqli_query($conn, 'SELECT borrow_date,deadline,bookID
+                                            FROM borrowed_book
+                                            WHERE patronID = "$accID"
+                                            ORDER BY borrow_date DESC
+                                            LIMIT 2;');
 
-                                        while($row = mysqli_fetch_assoc($result)){
+                                            while($row = mysqli_fetch_assoc($result)){
 
-                                            $booknumber = $row["bookID"];
-                                            $result2 = mysqli_query($conn, "SELECT book_name
-                                            FROM book
-                                            WHERE bookID = '$booknumber';");
+                                                $booknumber = $row[bookID];
+                                                $result2 = mysqli_query($conn, 'SELECT book_name
+                                                FROM book
+                                                WHERE bookID = "$booknumber"');
 
-                                            $row2 = mysqli_fetch_assoc($result2);
+                                                $row2 = mysqli_fetch_assoc($result2);
 
-                                            echo "<tr>
-                                                <td class='px-4 py-2 text-center'>$row[borrow_date]</td>
-                                                <td class='px-4 py-2 text-center'>$row[deadline]</td>
-                                                <td class='px-4 py-2 text-center'>$row2[book_name]</td>
-                                            </tr>";
-                                        }     
-                                    }
-                                    else{
-                                        $accID = $_SESSION["accountID"];
-                                        $result = mysqli_query($conn, "SELECT borrow_date,deadline,bookID
-                                        FROM borrowed_book
-                                        WHERE patronID = '$accID'
-                                        ORDER BY borrow_date DESC
-                                        LIMIT 2;");
-
-                                        while($row = mysqli_fetch_assoc($result)){
-
-                                            $booknumber = $row["bookID"];
-                                            $result2 = mysqli_query($conn, "SELECT book_name
-                                            FROM book
-                                            WHERE bookID = '$booknumber';");
-
-                                            $row2 = mysqli_fetch_assoc($result2);
-
-                                            echo "<tr>
-                                                <td class='px-4 py-2 text-center'>$row[borrow_date]</td>
-                                                <td class='px-4 py-2 text-center'>$row[deadline]</td>
-                                                <td class='px-4 py-2 text-center'>$row2[book_name]</td>
-                                            </tr>";
-                                        }     
-                                    }
-                                ?>
-                                </tbody>
-                            </table>
-                            <a href='borrowedbooks - profile.php'>
-                                <input class="view-all format" type="submit" value="View all">
-                            </a>
+                                                echo "<tr>
+                                                    <td class='px-4 py-2 text-center'>$row[borrow_date]</td>
+                                                    <td class='px-4 py-2 text-center'>$row[deadline]</td>
+                                                    <td class='px-4 py-2 text-center'>$row2[book_name]</td>
+                                                </tr>";
+                                            }     
+                                        }
+                                        echo"
+                                    </tbody>
+                                </table>
+                                <a href='borrowedbooks-profile.php'>
+                                    <input class='view-all format' type='submit' value='View all'>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div>";
+
+                echo'
                 <div class="profile-form profile-form-right col-lg-6 border-0 shadow">
                     <div class="col-lg-11 profile-frame">
                         <div class="col-lg-12">
@@ -350,13 +331,13 @@ if(isset($_POST["ret"])){
                             <table id="example" class="content-table table-borderless" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th class='px-4 py-2 text-center'>Book Name</th>
-                                        <th class='px-4 py-2 text-center'>Days Late</th>
-                                        <th class='px-4 py-2 text-center'>Penalty Fee</th>
+                                        <th class="px-4 py-2 text-center">Book Name</th>
+                                        <th class="px-4 py-2 text-center">Days Late</th>
+                                        <th class="px-4 py-2 text-center">Penalty Fee</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                <?php
+                                <tbody>';
+
                                     $result = mysqli_query($conn, "SELECT borrowID, book_name, deadline, bb.borrow_date AS borrow_date FROM borrowed_book bb
                                     INNER JOIN book b on bb.bookID = b.bookID
                                     INNER JOIN lib_acc a on bb.librarianID = a.librarianID
@@ -377,18 +358,22 @@ if(isset($_POST["ret"])){
                                         <td class='px-4 py-2 text-center'>$row[book_name]</td>
                                         <td class='px-4 py-2 text-center'>$totday days</td>
                                         <td class='px-4 py-2 text-center'>₱$totpen.00</td>
-                                    </tr>";
-                                    }     
-                                ?>
+                                    </tr>"; }
+
+                                    echo'
                                 </tbody>
                             </table>
-                            <a href='penaltyprofile.php'>
+                            <a href="penaltyprofile.php">
                                 <input class="view-all format" type="submit" value="View all">
                             </a>
                         </div>
                     </div>
                 </div>
-            </div>
+
+
+            </div>';
+                                    }?>
+                                
         </div>
     </div>
     </div>
