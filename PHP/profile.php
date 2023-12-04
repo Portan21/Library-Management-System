@@ -75,8 +75,7 @@ if(isset($_POST["ret"])){
             <a class="nav-link" href="catalogs.php">Catalog</a>
             </li>
 	    <?php
-        $acctype = $_SESSION["typeID"];
-	    if($acctype != 4){
+	    if(!empty($_SESSION["typeID"])){
 	    echo"
             <li class='nav-item'>
             <a class='nav-link' href='approval.php'>Approval</a>
@@ -124,7 +123,7 @@ if(isset($_POST["ret"])){
                                 <p class="static-text">Email</p>
                                 <p class="static-text">
                                 <?php
-                                if($_SESSION["typeID"] > 0){
+                                if(!empty($_SESSION["typeID"])){
                                     $accID = $_SESSION["accountID"];
                                     $result = mysqli_query($conn, "SELECT nameType
                                     FROM account_type a JOIN lib_acc l ON a.type_ID = l.typeID
@@ -176,7 +175,7 @@ if(isset($_POST["ret"])){
                                 <p><?php echo $_SESSION["name"]; ?></p>
                                 <p><?php echo $_SESSION["email"]; ?></p>
                                 <p><?php
-                                if($_SESSION["typeID"] > 0){
+                                if(!empty($_SESSION["typeID"])){
                                     $accID = $_SESSION["accountID"];
                                     $result = mysqli_query($conn, "SELECT nameType
                                     FROM account_type a JOIN lib_acc l ON a.type_ID = l.typeID
@@ -214,7 +213,7 @@ if(isset($_POST["ret"])){
                                 </thead>
                                 <tbody>
                                 <?php
-                                    if($_SESSION["typeID"] > 0){
+                                    if(!empty($_SESSION["typeID"])){
                                         $accID = $_SESSION["accountID"];
                                         $result = mysqli_query($conn, "SELECT lib_entry, lib_exit
                                         FROM lib_attendance
@@ -282,7 +281,31 @@ if(isset($_POST["ret"])){
                                 </thead>
                                 <tbody>
                                 <?php
-                                    if($_SESSION["typeID"] > 0){
+                                    if(!empty($_SESSION["typeID"])){
+                                        $accID = $_SESSION["accountID"];
+                                        $result = mysqli_query($conn, "SELECT borrow_date,deadline,bookID
+                                        FROM borrowed_book
+                                        WHERE librarianID = '$accID'
+                                        ORDER BY borrow_date DESC
+                                        LIMIT 2;");
+
+                                        while($row = mysqli_fetch_assoc($result)){
+
+                                            $booknumber = $row["bookID"];
+                                            $result2 = mysqli_query($conn, "SELECT book_name
+                                            FROM book
+                                            WHERE bookID = '$booknumber';");
+
+                                            $row2 = mysqli_fetch_assoc($result2);
+
+                                            echo "<tr>
+                                                <td class='px-4 py-2 text-center'>$row[borrow_date]</td>
+                                                <td class='px-4 py-2 text-center'>$row[deadline]</td>
+                                                <td class='px-4 py-2 text-center'>$row2[book_name]</td>
+                                            </tr>";
+                                        }     
+                                    }
+                                    else{
                                         $accID = $_SESSION["accountID"];
                                         $result = mysqli_query($conn, "SELECT borrow_date,deadline,bookID
                                         FROM borrowed_book
@@ -309,7 +332,7 @@ if(isset($_POST["ret"])){
                                 ?>
                                 </tbody>
                             </table>
-                            <a href='borrowedbooks.php'>
+                            <a href='borrowedbooks - profile.php'>
                                 <input class="view-all format" type="submit" value="View all">
                             </a>
                         </div>

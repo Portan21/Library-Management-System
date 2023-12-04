@@ -28,8 +28,7 @@ require 'config.php';
             <a class="nav-link" href="catalogs.php">Catalog</a>
             </li>
 	    <?php
-        $acctype = $_SESSION["typeID"];
-	    if($acctype != 4){
+	    if(!empty($_SESSION["typeID"])){
 	    echo"
             <li class='nav-item'>
             <a class='nav-link' href='approval.php'>Approval</a>
@@ -84,7 +83,7 @@ require 'config.php';
                 //     <td class='px-4 py-2 text-center'>$row[exit_time]</td>
                 // </tr>";
                 // }     
-                if($_SESSION["typeID"] > 0){
+                if(!empty($_SESSION["typeID"])){
                     $accID = $_SESSION["accountID"];
                     $result = mysqli_query($conn, "SELECT lib_entry, lib_exit
                     FROM lib_attendance

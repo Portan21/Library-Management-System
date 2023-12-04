@@ -28,8 +28,7 @@ require 'config.php';
             <a class="nav-link" href="catalogs.php">Catalog</a>
             </li>
 	    <?php
-        $acctype = $_SESSION["typeID"];
-	    if($acctype != 4){
+	    if(!empty($_SESSION["typeID"])){
 	    echo"
             <li class='nav-item'>
             <a class='nav-link' href='approval.php'>Approval</a>
@@ -72,26 +71,54 @@ require 'config.php';
         </thead>
         <tbody>
             <?php
-                $accID = $_SESSION["accountID"];
-                $result = mysqli_query($conn, "SELECT borrow_date,deadline,bookID
-                FROM borrowed_book
-                WHERE borrowerID = '$accID'
-                ORDER BY borrow_date DESC;");
-                while($row = mysqli_fetch_assoc($result)){
+                if(!empty($_SESSION["typeID"])){
+                    $accID = $_SESSION["accountID"];
+                    $result = mysqli_query($conn, "SELECT borrow_date,deadline,bookID
+                    FROM borrowed_book
+                    WHERE librarianID = '$accID'
+                    ORDER BY borrow_date DESC
+                    LIMIT 2;");
 
-                    $booknumber = $row["bookID"];
-                    $result2 = mysqli_query($conn, "SELECT book_name
-                    FROM book
-                    WHERE bookID = '$booknumber';");
+                    while($row = mysqli_fetch_assoc($result)){
 
-                    $row2 = mysqli_fetch_assoc($result2);
+                        $booknumber = $row["bookID"];
+                        $result2 = mysqli_query($conn, "SELECT book_name
+                        FROM book
+                        WHERE bookID = '$booknumber';");
 
-                    echo "<tr>
-                        <td class='px-4 py-2 text-center'>$row[borrow_date]</td>
-                        <td class='px-4 py-2 text-center'>$row[deadline]</td>
-                        <td class='px-4 py-2 text-center'>$row2[book_name]</td>
-                    </tr>";
-                }     
+                        $row2 = mysqli_fetch_assoc($result2);
+
+                        echo "<tr>
+                            <td class='px-4 py-2 text-center'>$row[borrow_date]</td>
+                            <td class='px-4 py-2 text-center'>$row[deadline]</td>
+                            <td class='px-4 py-2 text-center'>$row2[book_name]</td>
+                        </tr>";
+                    }
+                }
+                else{
+                    $accID = $_SESSION["accountID"];
+                    $result = mysqli_query($conn, "SELECT borrow_date,deadline,bookID
+                    FROM borrowed_book
+                    WHERE patronID = '$accID'
+                    ORDER BY borrow_date DESC
+                    LIMIT 2;");
+
+                    while($row = mysqli_fetch_assoc($result)){
+
+                        $booknumber = $row["bookID"];
+                        $result2 = mysqli_query($conn, "SELECT book_name
+                        FROM book
+                        WHERE bookID = '$booknumber';");
+
+                        $row2 = mysqli_fetch_assoc($result2);
+
+                        echo "<tr>
+                            <td class='px-4 py-2 text-center'>$row[borrow_date]</td>
+                            <td class='px-4 py-2 text-center'>$row[deadline]</td>
+                            <td class='px-4 py-2 text-center'>$row2[book_name]</td>
+                        </tr>";
+                    }     
+                }
             ?>
         </tbody>
       </table>
