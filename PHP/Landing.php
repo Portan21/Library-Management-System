@@ -141,6 +141,16 @@
               <img src="..//Pictures/landing/manageacc.png" class="img-responsive" alt=" Title"> </a> </div>
           </div>
         </div>
+
+        <div class="col-sm-6 col-md-6">
+          <div class="portfolio-item">
+            <div class="hover-bg"> <a href="QRcodeReader.php" title=" Manage Accounts" data-lightbox-gallery="gallery1">
+              <div class="hover-text">
+                <h4>QR Generator</h4>
+              </div>
+              <img src="..//Pictures/landing/manageacc.png" class="img-responsive" alt=" Title"> </a> </div>
+          </div>
+        </div>
       </div>
     </div>
     </center>
