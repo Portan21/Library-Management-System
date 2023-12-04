@@ -8,6 +8,22 @@ if($_SESSION["typeID"] == 4){
     header("Location: catalog.php");
 }
 
+    date_default_timezone_set('Asia/Manila'); // Set the time zone to Philippines
+    $currentDateTime = date('Y-m-d H:i:s');
+
+    $result = mysqli_query($conn, "SELECT requestID, bookID FROM book_request WHERE deadline < '$currentDateTime'");
+            while($row = mysqli_fetch_assoc($result)){
+                $rejbook = $row['bookID'];
+                $reqID = $row['requestID'];
+                $updatequery = "UPDATE book SET availability = '1' WHERE bookID = '$rejbook'";
+                if (mysqli_query($conn, $updatequery)) {
+                    $delquery = "DELETE FROM book_request WHERE requestID = $reqID";
+                    
+                    if(mysqli_query($conn, $delquery)){
+                        
+                    };
+                }
+            }
 ?>
 <!DOCTYPE html>
 <html lang="en">

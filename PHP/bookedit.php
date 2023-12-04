@@ -13,54 +13,10 @@ else{
 }
 
 
-if(!empty($_SESSION["typeID"])){
-  header("Location: bookedit.php");
+if(empty($_SESSION["typeID"])){
+  header("Location: bookdetail.php");
 }
 
-
-//ADD NO LIBRARIAN ALLOWED
-
-
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  if (isset($_POST["submit"])) {
-
-      $bookTitle = $title;
-      $accountid = $_SESSION["accountID"];
-      $duration = $_POST["duration"];
-      
-        date_default_timezone_set('Asia/Manila'); // Set the time zone to Philippines
-        $currentDateTime = date('Y-m-d H:i:s');
-        // Add 2 hours to the current date and time
-        $futureDateTime = date('Y-m-d H:i:s', strtotime($currentDateTime . ' +2 hours'));
-
-
-      $result = mysqli_query($conn, "SELECT bookID, availability FROM book WHERE book_name = '$bookTitle'");
-      $row = mysqli_fetch_assoc($result);
-
-      $bookid = $row["bookID"];
-      $availability = $row["availability"];
-
-      if($availability == 1){
-        $reqquery = "INSERT INTO book_request(patronID, bookID, duration, deadline) VALUES('$accountid','$bookid', '$duration', '$futureDateTime')";
-        if(mysqli_query($conn,$reqquery)){
-          // Update the 'book' table
-          $updatequery = "UPDATE book SET availability = '2' WHERE bookID = '$bookid'";
-          if (mysqli_query($conn, $updatequery)) {
-              // The update was successful
-          }
-        }
-        // For example, you can insert it into a database or perform any other necessary action.
-        echo "<script> alert('Book:$bookTitle Borrowing Request Sent. Head to the Library to confirm your request and claim the book.'); </script>"; // You can provide a response if needed.
-      }
-      else{
-        echo "<script> alert('Book:$bookTitle Currently Unavailable. Try borrowing another book.'); </script>";
-      }
-
-  } else {
-      // Handle the case when 'bookTitle' is not received in the POST request.
-      echo "<script> alert('BORROWING FAILED. Try again.'); </script>";
-  }
-}
 
 ?>
 <!DOCTYPE html>
@@ -69,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Details</title> 
+    <title>Book Details - Edit</title> 
     <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
 
 </head>
@@ -131,11 +87,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <div class="col-md-8 mb-3">
                 <?php
                     $escapedTitle = mysqli_real_escape_string($conn, $title);
-                    $result = mysqli_query($conn, "SELECT bookID, book_name, author, description FROM book WHERE book_name = '$escapedTitle'");
+                    $result = mysqli_query($conn, "SELECT bookID, genres, book_name, author, description, rating, availability FROM book WHERE book_name = '$escapedTitle'");
         
                     while($row = mysqli_fetch_assoc($result)){
                         $bookID = $row['bookID'];
                         $author = $row['author'];
+                        $genres = $row['genres'];
+                        $rating = $row['rating'];
+                        $availability = $row['availability'];
                         $description = $row['description'];
                     }
                 ?>
@@ -149,25 +108,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <h1 class="mb-4 text-uppercase">BOOK BORROW</h1>
                 
                 <form action="" method="post" autocomplete="off">
-                    <a>TITLE</a>
-                    <h4 class="mb-3 text-uppercase"><?php echo $title ?></h4>
+                    <a>GENRES</a>
+                    <h4 class="mb-3 text-uppercase"><?php echo $genres ?></h4>
 
-                    <a>AUTHOR</a>
-                    <h4 class="mb-3 text-uppercase"><?php echo $author ?></h4>
+                    <a>RATINGS</a>
+                    <h4 class="mb-3 text-uppercase"><?php echo $rating ?></h4>
 
                     <a>DURATION OF BORROWING</a>
-                    <div class="row mb-4">
-                        <div class="col-md-6 mt-1">
-                            <select name="duration" id="sduration" class="form-select" aria-label="Default select example">
-                                <option value="7">One Week</option>
-                                <option value="14">Two Weeks</option>
-                                <option value="21">Three Weeks</option>
-                                <option value="28">Four Weeks</option>
-                            </select>
-                        </div>
-                    </div>
+                    <h4 class="mb-3 text-uppercase"><?php echo $availability ?></h4>
 
-                    <button type="submit" name="submit" id="submit" class="btn btn-warning btn-lg mt-2"><b>REQUEST TO BORROW</b></button>
+                    <button type="submit" name="submit" id="submit" class="btn btn-danger btn-lg mt-2"><b>EDIT BOOK DETAILS</b></button>
                 </form>
             </div>
         </div>
