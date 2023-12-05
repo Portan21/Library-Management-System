@@ -90,10 +90,6 @@ if(isset($_POST["ret"])){
 	    if($acctype != 4){
 	    echo"
             <li class='nav-item'>
-            <a class='nav-link' href='approval.php'>Approval</a>
-            </li>
-
-            <li class='nav-item'>
             <a class='nav-link' href='request.php'>Request</a>
             </li>
 
@@ -103,6 +99,10 @@ if(isset($_POST["ret"])){
 
             <li class='nav-item'>
             <a class='nav-link active' href='penalty.php'>Penalty</a>
+            </li>
+            
+            <li class='nav-item'>
+            <a class='nav-link' href='attendance(librarians)-records.php'>Records</a>
             </li>";
 	    }
 

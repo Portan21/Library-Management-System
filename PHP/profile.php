@@ -78,10 +78,6 @@ if(isset($_POST["ret"])){
 	    if(!empty($_SESSION["typeID"])){
 	    echo"
             <li class='nav-item'>
-            <a class='nav-link' href='approval.php'>Approval</a>
-            </li>
-
-            <li class='nav-item'>
             <a class='nav-link' href='request.php'>Request</a>
             </li>
 
@@ -91,6 +87,10 @@ if(isset($_POST["ret"])){
 
             <li class='nav-item'>
             <a class='nav-link' href='penalty.php'>Penalty</a>
+            </li>
+            
+            <li class='nav-item'>
+            <a class='nav-link' href='attendance(librarians)-records.php'>Records</a>
             </li>";
 	    }
 
