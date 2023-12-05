@@ -68,7 +68,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="catalogs.php" class="page-scroll">Catalog</a></li>
-                    <li><a href="approval.php" class="page-scroll">Approval</a></li>
+                    <li><a class='nav-link' href='attendance(librarians)-records.php'>Records</a></li>
                     <li><a href="request.php" class="page-scroll">Request</a></li>
                     <li><a href="borrowed.php" class="page-scroll">Borrowed</a></li>
                     <li><a href="penalty.php" class="page-scroll">Penalty</a></li>
@@ -104,7 +104,7 @@
         
         <div class="col-sm-6 col-md-6">
           <div class="portfolio-item">
-            <div class="hover-bg"> <a href="link" title=" Issue Book" data-lightbox-gallery="gallery1">
+            <div class="hover-bg"> <a href="issuebook.php" title=" Issue Book" data-lightbox-gallery="gallery1">
               <div class="hover-text">
                 <h4>Issue Book</h4>
               </div>

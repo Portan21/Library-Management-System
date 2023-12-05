@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 	    if(!empty($_SESSION["typeID"])){
 	    echo"
             <li class='nav-item'>
-            <a class='nav-link' href='approval.php'>Approval</a>
+            <a class='nav-link' href='attendance(librarians)-records.php'>Records</a>
             </li>
 
             <li class='nav-item'>
@@ -106,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div class="container">
         <div class="row mt-3"></div>
 
-        <div class="row mt-5 mb-4">
+        <div class="row mb-2">
             <div class="col">
                 <a href="catalogs.php" class="mt-2 text-decoration-none text-uppercase">< BACK TO LIBRARY CATALOG</a>
                 
@@ -114,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
         </div>
             <form action="" method="post" autocomplete="off">
-                <div class="row mt-3">
+                <div class="row">
                     <div class="col-md-8 mb-3">
                         <?php
                         $escapedTitle = mysqli_real_escape_string($conn, $title);
