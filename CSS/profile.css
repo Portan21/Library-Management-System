@@ -1,7 +1,8 @@
 .container-fluid-profile{
     background-color: #e9f6ff;
-    height: 100%;
+    height: 91vh;
     width: 100%;
+    overflow: hidden;
 }
 
 .profile{
