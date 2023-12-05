@@ -61,37 +61,32 @@ require 'config.php';
     </nav>
     <div class = "container py-4">
     <button class="select btn btn-primary"><a class="nav-link" href="attendance(librarians)-records.php">Attendance - Librarian</a></button>
-    <button class="select btn btn-success"><a class="nav-link" href="attendance(patrons)-records.php">Attendance - Patron</a></button>
+    <button class="select btn btn-primary"><a class="nav-link" href="attendance(patrons)-records.php">Attendance - Patron</a></button>
     <button class="select btn btn-primary"><a class="nav-link" href="returned-records.php">Returned Books</a></button>
     <button class="select btn btn-primary"><a class="nav-link" href="returnedwpenalty-records.php">Returned Books Penalty</a></button>
     <button class="select btn btn-primary"><a class="nav-link" href="librarianprofiles-records.php">Librarian Profiles</a></button>
-    <button class="select btn btn-primary"><a class="nav-link" href="patronprofiles-records.php">Patron Profiles</a></button>
+    <button class="select btn btn-success"><a class="nav-link" href="patronprofiles-records.php">Patron Profiles</a></button>
     <div class ="row">
-    <h3 class="mb-4 mt-3 text-uppercase">Attendance - Patrons</h3>
+    <h3 class="mb-4 mt-3 text-uppercase">Patron Accounts</h3>
     <table id="example" class="content-table" style="width:100%">
     <thead>
         <tr>
+            <th class='px-4 py-2 text-center'>ID</th>
             <th class='px-4 py-2 text-center'>Name</th>
-            <th class='px-4 py-2 text-center'>Date</th>
-            <th class='px-4 py-2 text-center'>Time in</th>
-            <th class='px-4 py-2 text-center'>Time out</th>
+            <th class='px-4 py-2 text-center'>Email</th>
+            <th class='px-4 py-2 text-center'>Account Type</th>
         </tr>
         </thead>
         <tbody>
             <?php  
-                $result = mysqli_query($conn, "SELECT pt_name, pt_entry, pt_exit
-                FROM patron_attendance att
-                INNER JOIN patron_acc acc ON att.patronID = acc.patronID
-                ORDER BY pt_attendanceID DESC;");
+                $result = mysqli_query($conn, "SELECT patronID, pt_name, email, course
+                FROM patron_acc;");
                 while($row = mysqli_fetch_assoc($result)){
-                    $date = substr("$row[pt_entry]", 0, 10);
-                    $timeIN = substr("$row[pt_entry]", -8);
-                    $timeOUT = substr("$row[pt_exit]", -8);
                     echo "<tr>
+                        <td class='px-4 py-2 text-center'>$row[patronID]</td>
                         <td class='px-4 py-2 text-center'>$row[pt_name]</td>
-                        <td class='px-4 py-2 text-center'>$date</td>
-                        <td class='px-4 py-2 text-center'>$timeIN</td>
-                        <td class='px-4 py-2 text-center'>$timeOUT</td>
+                        <td class='px-4 py-2 text-center'>$row[email]</td>
+                        <td class='px-4 py-2 text-center'>$row[course]</td>
                     </tr>";
                 }     
             ?>

@@ -21,12 +21,6 @@ require 'config.php';
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
-        <ul class="navbar-nav mb-lg-0 ms-auto">
-            <li class="nav-item"><a class="nav-link active" aria-current = "page" href="attendance(librarians)-records.php">Attendance-librarians</a></li>
-            <li class="nav-item"><a class="nav-link" href="attendance(patrons)-records.php">Attendance-patrons</a></li>
-            <li class="nav-item"><a class="nav-link" href="returned-records.php">Returned</a></li>
-            <li class="nav-item"><a class="nav-link" href="returnedwpenalty-records.php">Returned-penalty</a></li>
-        </ul>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mb-lg-0 ms-auto">
 
@@ -66,8 +60,14 @@ require 'config.php';
     </div>
     </nav>
     <div class = "container py-4">
+    <button class="select btn btn-success"><a class="nav-link" href="attendance(librarians)-records.php">Attendance - Librarian</a></button>
+    <button class="select btn btn-primary"><a class="nav-link" href="attendance(patrons)-records.php">Attendance - Patron</a></button>
+    <button class="select btn btn-primary"><a class="nav-link" href="returned-records.php">Returned Books</a></button>
+    <button class="select btn btn-primary"><a class="nav-link" href="returnedwpenalty-records.php">Returned Books Penalty</a></button>
+    <button class="select btn btn-primary"><a class="nav-link" href="librarianprofiles-records.php">Librarian Profiles</a></button>
+    <button class="select btn btn-primary"><a class="nav-link" href="patronprofiles-records.php">Patron Profiles</a></button>
     <div class ="row">
-    <h3 class="mb-4 text-uppercase">Attendance - Librarians</h3>
+    <h3 class="mb-4 mt-3 text-uppercase">Attendance - Librarians</h3>
     <table id="example" class="content-table" style="width:100%">
     <thead>
         <tr>
