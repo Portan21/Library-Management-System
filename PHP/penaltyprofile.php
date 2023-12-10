@@ -77,10 +77,6 @@ while($rowbdate = mysqli_fetch_assoc($bdateres)){
 	    if(!empty($_SESSION["typeID"])){
 	    echo"
             <li class='nav-item'>
-            <a class='nav-link' href='approval.php'>Approval</a>
-            </li>
-
-            <li class='nav-item'>
             <a class='nav-link' href='request.php'>Request</a>
             </li>
 
@@ -90,6 +86,10 @@ while($rowbdate = mysqli_fetch_assoc($bdateres)){
 
             <li class='nav-item'>
             <a class='nav-link' href='penalty.php'>Penalty</a>
+            </li>
+            
+            <li class='nav-item'>
+            <a class='nav-link' href='librarianprofiles-records.php'>Records</a>
             </li>";
 	    }
 
