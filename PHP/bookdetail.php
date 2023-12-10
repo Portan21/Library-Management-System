@@ -70,6 +70,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Details</title> 
+    <style>
+        .table-borderless td,
+        .table-borderless th {
+            border: 0;
+        }
+    </style>
     <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
 
 </head>
@@ -180,6 +186,50 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     }
                     ?>
                 </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container mb-5">
+        <div class="row mt-5">
+            <h1 class="mt-2 text-decoration-none text-uppercase">Borrow History</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <?php
+                $result = mysqli_query($conn, "SELECT patron_acc.pt_name, borrow_date, return_date
+                    FROM returned_book
+                    JOIN patron_acc ON returned_book.patronID = patron_acc.patronID
+                    WHERE returned_book.bookID = $bookID
+                    ORDER BY returned_book.return_date DESC
+                    LIMIT 20;");
+
+                if (mysqli_num_rows($result) > 0) {
+                    // Display the table if there are borrow records
+                    echo '<table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th>Patron Name</th>
+                                    <th>Borrow Date</th>
+                                    <th>Return Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>';
+
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo '<tr>
+                                <td>' . $row['pt_name'] . '</td>
+                                <td>' . $row['borrow_date'] . '</td>
+                                <td>' . $row['return_date'] . '</td>
+                            </tr>';
+                    }
+
+                    echo '</tbody></table>';
+                } else {
+                    // Display a message if there are no borrow records
+                    echo '<p>No borrow records available.</p>';
+                }
+                ?>
             </div>
         </div>
     </div>

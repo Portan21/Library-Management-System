@@ -10,6 +10,7 @@ if(empty($_SESSION["bookTitle"])){
 }
 else{
     $title = $_SESSION["bookTitle"];
+    $id = $_SESSION["accountID"];
 }
 
 if(empty($_SESSION["typeID"])){
@@ -19,6 +20,7 @@ if(empty($_SESSION["typeID"])){
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["submit"])) {
         // Get the values from the form
+        $bookIdentity = mysqli_real_escape_string($conn, $_POST["bookID"]);
         $descriptionValue = mysqli_real_escape_string($conn, $_POST["description"]);
         $titlevalue = mysqli_real_escape_string($conn, $_POST["title"]);
         $authorvalue = mysqli_real_escape_string($conn, $_POST["author"]);
@@ -34,11 +36,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             rating = '$ratingvalue',
             availability = '$availabilityvalue',
             description = '$descriptionValue'
-            WHERE book_name = '$title'";
+            WHERE bookID = '$bookIdentity'";
 
             
         if (mysqli_query($conn, $updatequery)) {
-            // The update was successful
+            
+            date_default_timezone_set('Asia/Manila'); // Set the time zone to Philippines
+            $currentDateTime = date('Y-m-d H:i:s');
+
+            $insertquery = "INSERT INTO edited_by (bookID, librarianID, edit_time) VALUES ('$bookIdentity', '$id', '$currentDateTime')";
+                
+            if (mysqli_query($conn, $insertquery)) {
+                echo "<script> alert('Book Editing Successful'); </script>";
+            } else {
+                echo "<script> alert('Book Editing Not Successful'); </script>";
+            }
         } else {
             // Handle the case where the update fails
             echo "Error updating record: " . mysqli_error($conn);
@@ -55,6 +67,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Details - Edit</title> 
+    <style>
+        .table-borderless td,
+        .table-borderless th {
+            border: 0;
+        }
+    </style>
     <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
 
 </head>
@@ -103,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </ul>
     </div>
     </nav>
-    <div class="container">
+    <div class="container mt-5">
         <div class="row mt-3"></div>
 
         <div class="row mb-2">
@@ -188,13 +206,79 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 </select>
                             </div>
                         </div>
+                        
+                        <?php
+                            
+                        $escapedTitle = mysqli_real_escape_string($conn, $title);
+                        $result = mysqli_query($conn, "SELECT name, edit_time FROM edited_by
+                        JOIN lib_acc ON edited_by.librarianID = lib_acc.librarianID
+                        WHERE edited_by.bookID = $bookID
+                        ORDER BY edited_by.edit_time DESC
+                        LIMIT 1;
+                        ");
 
-                        <button type="submit" name="submit" id="submit" class="btn btn-danger btn-lg mt-2"><b>EDIT BOOK DETAILS</b></button>
+                        while($row = mysqli_fetch_assoc($result)){
+                            $libname = $row['name'];
+                            $editime = $row['edit_time'];
+                            echo"
+                            <p> Last edited by:<br> $libname ($editime) </p>
+                            ";
+                        }
+
+                        ?>
+
+                        <input type="hidden" id="bookID" name="bookID" value="<?php echo $bookID ?>">
+                        <button type="submit" name="submit" id="submit" class="btn btn-danger btn-lg "><b>EDIT BOOK DETAILS</b></button>
                     </div>
                 </div>
             </form>
 
     </div>
+    
+    <div class="container mb-5">
+        <div class="row mt-5">
+            <h1 class="mt-2 text-decoration-none text-uppercase">Borrow History</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <?php
+                $result = mysqli_query($conn, "SELECT patron_acc.pt_name, borrow_date, return_date
+                    FROM returned_book
+                    JOIN patron_acc ON returned_book.patronID = patron_acc.patronID
+                    WHERE returned_book.bookID = $bookID
+                    ORDER BY returned_book.return_date DESC
+                    LIMIT 20;");
+
+                if (mysqli_num_rows($result) > 0) {
+                    // Display the table if there are borrow records
+                    echo '<table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th>Patron Name</th>
+                                    <th>Borrow Date</th>
+                                    <th>Return Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>';
+
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo '<tr>
+                                <td>' . $row['pt_name'] . '</td>
+                                <td>' . $row['borrow_date'] . '</td>
+                                <td>' . $row['return_date'] . '</td>
+                            </tr>';
+                    }
+
+                    echo '</tbody></table>';
+                } else {
+                    // Display a message if there are no borrow records
+                    echo '<p>No borrow records available.</p>';
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+
 
     <script src = "https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src = "../JavaScript/app2.js"></script>
