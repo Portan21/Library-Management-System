@@ -43,7 +43,7 @@ require 'config.php';
             </li>
             
             <li class='nav-item'>
-            <a class='nav-link active' aria-current='page' href='attendance(librarians)-records.php'>Records</a>
+            <a class='nav-link active' aria-current='page' href='librarianprofiles-records.php'>Records</a>
             </li>";
 	    }
 
@@ -60,12 +60,12 @@ require 'config.php';
     </div>
     </nav>
     <div class = "container py-4">
+    <button class="select btn btn-primary"><a class="nav-link" href="librarianprofiles-records.php">Librarian Profiles</a></button>
+    <button class="select btn btn-success"><a class="nav-link" href="patronprofiles-records.php">Patron Profiles</a></button>
     <button class="select btn btn-primary"><a class="nav-link" href="attendance(librarians)-records.php">Attendance - Librarian</a></button>
     <button class="select btn btn-primary"><a class="nav-link" href="attendance(patrons)-records.php">Attendance - Patron</a></button>
     <button class="select btn btn-primary"><a class="nav-link" href="returned-records.php">Returned Books</a></button>
     <button class="select btn btn-primary"><a class="nav-link" href="returnedwpenalty-records.php">Returned Books Penalty</a></button>
-    <button class="select btn btn-primary"><a class="nav-link" href="librarianprofiles-records.php">Librarian Profiles</a></button>
-    <button class="select btn btn-success"><a class="nav-link" href="patronprofiles-records.php">Patron Profiles</a></button>
     <div class ="row">
     <h3 class="mb-4 mt-3 text-uppercase">Patron Accounts</h3>
     <table id="example" class="content-table" style="width:100%">
@@ -74,20 +74,33 @@ require 'config.php';
             <th class='px-4 py-2 text-center'>ID</th>
             <th class='px-4 py-2 text-center'>Name</th>
             <th class='px-4 py-2 text-center'>Email</th>
-            <th class='px-4 py-2 text-center'>Account Type</th>
+            <th class='px-4 py-2 text-center'>Course</th>
+            <th class='px-4 py-2 text-center'>Status</th>
         </tr>
         </thead>
         <tbody>
             <?php  
-                $result = mysqli_query($conn, "SELECT patronID, pt_name, email, course
+                $result = mysqli_query($conn, "SELECT patronID, pt_name, email, course, status
                 FROM patron_acc;");
                 while($row = mysqli_fetch_assoc($result)){
-                    echo "<tr>
-                        <td class='px-4 py-2 text-center'>$row[patronID]</td>
-                        <td class='px-4 py-2 text-center'>$row[pt_name]</td>
-                        <td class='px-4 py-2 text-center'>$row[email]</td>
-                        <td class='px-4 py-2 text-center'>$row[course]</td>
-                    </tr>";
+                    if($row['status'] == 1){
+                        echo "<tr>
+                            <td class='px-4 py-2 text-center'>$row[patronID]</td>
+                            <td class='px-4 py-2 text-center'>$row[pt_name]</td>
+                            <td class='px-4 py-2 text-center'>$row[email]</td>
+                            <td class='px-4 py-2 text-center'>$row[course]</td>
+                            <td class='px-4 py-2 text-center'><button id='statusButton$row[patronID]' onmouseover='hover($row[patronID])' onmouseout='hoverOut($row[patronID])' onclick='changeStatus($row[patronID])' class='select btn btn-success'>Enabled</button></td>
+                        </tr>";
+                    }
+                    else{
+                        echo "<tr>
+                            <td class='px-4 py-2 text-center'>$row[patronID]</td>
+                            <td class='px-4 py-2 text-center'>$row[pt_name]</td>
+                            <td class='px-4 py-2 text-center'>$row[email]</td>
+                            <td class='px-4 py-2 text-center'>$row[course]</td>
+                            <td class='px-4 py-2 text-center'><button id='statusButton$row[patronID]' onmouseover='hover($row[patronID])' onmouseout='hoverOut($row[patronID])' onclick='changeStatus($row[patronID])' class='select btn btn-danger'>Disabled</button></td>
+                        </tr>";
+                    }
                 }     
             ?>
         </tbody>
@@ -96,7 +109,7 @@ require 'config.php';
     <script src = "https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src = "https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src = "https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    <script src = "../JavaScript/index.js"></script>
+    <script src = "../JavaScript/accountStatus - patron.js"></script>
     <script src = "../JavaScript/app2.js"></script>
 </body>
 </html>

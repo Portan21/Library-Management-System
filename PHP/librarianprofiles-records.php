@@ -43,7 +43,7 @@ require 'config.php';
             </li>
             
             <li class='nav-item'>
-            <a class='nav-link active' aria-current='page' href='attendance(librarians)-records.php'>Records</a>
+            <a class='nav-link active' aria-current='page' href='librarianprofiles-records.php'>Records</a>
             </li>";
 	    }
 
@@ -60,12 +60,12 @@ require 'config.php';
     </div>
     </nav>
     <div class = "container py-4">
+    <button class="select btn btn-success"><a class="nav-link" href="librarianprofiles-records.php">Librarian Profiles</a></button>
+    <button class="select btn btn-primary"><a class="nav-link" href="patronprofiles-records.php">Patron Profiles</a></button>
     <button class="select btn btn-primary"><a class="nav-link" href="attendance(librarians)-records.php">Attendance - Librarian</a></button>
     <button class="select btn btn-primary"><a class="nav-link" href="attendance(patrons)-records.php">Attendance - Patron</a></button>
     <button class="select btn btn-primary"><a class="nav-link" href="returned-records.php">Returned Books</a></button>
     <button class="select btn btn-primary"><a class="nav-link" href="returnedwpenalty-records.php">Returned Books Penalty</a></button>
-    <button class="select btn btn-success"><a class="nav-link" href="librarianprofiles-records.php">Librarian Profiles</a></button>
-    <button class="select btn btn-primary"><a class="nav-link" href="patronprofiles-records.php">Patron Profiles</a></button>
     <div class ="row">
     <h3 class="mb-4 mt-3 text-uppercase">Librarian Accounts</h3>
     <table id="example" class="content-table" style="width:100%">
@@ -75,21 +75,110 @@ require 'config.php';
             <th class='px-4 py-2 text-center'>Name</th>
             <th class='px-4 py-2 text-center'>Email</th>
             <th class='px-4 py-2 text-center'>Account Type</th>
+            <th class='px-4 py-2 text-center'>Status</th>
         </tr>
         </thead>
         <tbody>
             <?php  
-                $result = mysqli_query($conn, "SELECT librarianID, name, email, nametype
+            $accID = $_SESSION["accountID"];
+            $result = mysqli_query($conn, "SELECT typeID
+            FROM lib_acc
+            WHERE librarianID = '$accID'");
+            $row = mysqli_fetch_assoc($result);
+
+            if($row['typeID'] == 2){
+                $result = mysqli_query($conn, "SELECT librarianID, name, email, nametype, status
                 FROM lib_acc acc
                 INNER JOIN account_type acct ON acc.typeID = acct.type_ID;");
                 while($row = mysqli_fetch_assoc($result)){
-                    echo "<tr>
-                        <td class='px-4 py-2 text-center'>$row[librarianID]</td>
-                        <td class='px-4 py-2 text-center'>$row[name]</td>
-                        <td class='px-4 py-2 text-center'>$row[email]</td>
-                        <td class='px-4 py-2 text-center'>$row[nametype]</td>
-                    </tr>";
-                }     
+                    if($row['nametype'] != "Admin" && $row['status'] == 1){
+                        echo "<tr>
+                            <td class='px-4 py-2 text-center'>$row[librarianID]</td>
+                            <td class='px-4 py-2 text-center'>$row[name]</td>
+                            <td class='px-4 py-2 text-center'>$row[email]</td>
+                            <td class='px-4 py-2 text-center'>$row[nametype]</td>
+                            <td class='px-4 py-2 text-center'><button id='statusButton$row[librarianID]' onmouseover='hover($row[librarianID])' onmouseout='hoverOut($row[librarianID])' onclick='changeStatus($row[librarianID])' class='select btn btn-success'>Enabled</button></td>
+                        </tr>";
+                    }
+                    else if ($row['nametype'] != "Admin" && $row['status'] == 2){
+                        echo "<tr>
+                            <td class='px-4 py-2 text-center'>$row[librarianID]</td>
+                            <td class='px-4 py-2 text-center'>$row[name]</td>
+                            <td class='px-4 py-2 text-center'>$row[email]</td>
+                            <td class='px-4 py-2 text-center'>$row[nametype]</td>
+                            <td class='px-4 py-2 text-center'><button id='statusButton$row[librarianID]' onmouseover='hover($row[librarianID])' onmouseout='hoverOut($row[librarianID])' onclick='changeStatus($row[librarianID])' class='select btn btn-danger'>Disabled</button></td>
+                        </tr>";
+                    }
+                    else if($row['nametype'] == "Admin" && $row['status'] == 1){
+                        echo "<tr>
+                            <td class='px-4 py-2 text-center'>$row[librarianID]</td>
+                            <td class='px-4 py-2 text-center'>$row[name]</td>
+                            <td class='px-4 py-2 text-center'>$row[email]</td>
+                            <td class='px-4 py-2 text-center'>$row[nametype]</td>
+                            <td class='px-4 py-2 text-center'><button id='statusButton$row[librarianID]' class='select btn btn-success'>Enabled</button></td>
+                        </tr>";
+                    }
+                    else if($row['nametype'] == "Admin" && $row['status'] == 2){
+                        echo "<tr>
+                            <td class='px-4 py-2 text-center'>$row[librarianID]</td>
+                            <td class='px-4 py-2 text-center'>$row[name]</td>
+                            <td class='px-4 py-2 text-center'>$row[email]</td>
+                            <td class='px-4 py-2 text-center'>$row[nametype]</td>
+                            <td class='px-4 py-2 text-center'><button id='statusButton$row[librarianID]' class='select btn btn-danger'>Disabled</button></td>
+                        </tr>";
+                    }
+                }
+            }     
+            else if($row['typeID'] == 1){
+                $result = mysqli_query($conn, "SELECT librarianID, name, email, nametype, status
+                FROM lib_acc acc
+                INNER JOIN account_type acct ON acc.typeID = acct.type_ID;");
+                while($row = mysqli_fetch_assoc($result)){
+                    if($row['status'] == 1){
+                        echo "<tr>
+                            <td class='px-4 py-2 text-center'>$row[librarianID]</td>
+                            <td class='px-4 py-2 text-center'>$row[name]</td>
+                            <td class='px-4 py-2 text-center'>$row[email]</td>
+                            <td class='px-4 py-2 text-center'>$row[nametype]</td>
+                            <td class='px-4 py-2 text-center'><button id='statusButton$row[librarianID]' onmouseover='hover($row[librarianID])' onmouseout='hoverOut($row[librarianID])' onclick='changeStatus($row[librarianID])' class='select btn btn-success'>Enabled</button></td>
+                        </tr>";
+                    }
+                    else{
+                        echo "<tr>
+                            <td class='px-4 py-2 text-center'>$row[librarianID]</td>
+                            <td class='px-4 py-2 text-center'>$row[name]</td>
+                            <td class='px-4 py-2 text-center'>$row[email]</td>
+                            <td class='px-4 py-2 text-center'>$row[nametype]</td>
+                            <td class='px-4 py-2 text-center'><button id='statusButton$row[librarianID]' onmouseover='hover($row[librarianID])' onmouseout='hoverOut($row[librarianID])' onclick='changeStatus($row[librarianID])' class='select btn btn-danger'>Disabled</button></td>
+                        </tr>";
+                    }
+                }
+            }     
+            else{
+                $result = mysqli_query($conn, "SELECT librarianID, name, email, nametype, status
+                FROM lib_acc acc
+                INNER JOIN account_type acct ON acc.typeID = acct.type_ID;");
+                while($row = mysqli_fetch_assoc($result)){
+                    if($row['status'] == 1){
+                        echo "<tr>
+                            <td class='px-4 py-2 text-center'>$row[librarianID]</td>
+                            <td class='px-4 py-2 text-center'>$row[name]</td>
+                            <td class='px-4 py-2 text-center'>$row[email]</td>
+                            <td class='px-4 py-2 text-center'>$row[nametype]</td>
+                            <td class='px-4 py-2 text-center'><button id='statusButton$row[librarianID]' class='select btn btn-success'>Enabled</button></td>
+                        </tr>";
+                    }
+                    else{
+                        echo "<tr>
+                            <td class='px-4 py-2 text-center'>$row[librarianID]</td>
+                            <td class='px-4 py-2 text-center'>$row[name]</td>
+                            <td class='px-4 py-2 text-center'>$row[email]</td>
+                            <td class='px-4 py-2 text-center'>$row[nametype]</td>
+                            <td class='px-4 py-2 text-center'><button id='statusButton$row[librarianID]' class='select btn btn-danger'>Disabled</button></td>
+                        </tr>";
+                    }
+                }
+            }
             ?>
         </tbody>
       </table>
@@ -97,7 +186,7 @@ require 'config.php';
     <script src = "https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src = "https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src = "https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    <script src = "../JavaScript/index.js"></script>
+    <script src = "../JavaScript/accountStatus - librarian.js"></script>
     <script src = "../JavaScript/app2.js"></script>
 </body>
 </html>
