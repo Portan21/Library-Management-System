@@ -117,7 +117,7 @@ if(isset($_POST["ret"])){
                 <div class="profile-form profile-form-left col-lg-6 border-0 shadow">
                     <div class="col-lg-11 profile-frame">
                         <div class="col-lg-12">
-                            <p class="overview">Overview <a href="#"><input class="edit-button" type="submit" value="Edit"></a> </p>
+                            <p class="overview">Overview <a href="#"><input class="edit-button pt-1 pb-1 pl-1 pr-1" type="submit" value="Edit"></a> </p>
                             
                             <hr>
                         </div>
