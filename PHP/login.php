@@ -10,7 +10,7 @@ if(isset($_POST["login"])){
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $result = mysqli_query($conn, "SELECT * FROM lib_acc WHERE email = '$email'");
+    $result = mysqli_query($conn, "SELECT * FROM lib_acc WHERE email = '$email' AND status = '1'");
     $row = mysqli_fetch_assoc($result);
 
     if(mysqli_num_rows($result) > 0){
@@ -29,7 +29,7 @@ if(isset($_POST["login"])){
         }
     }
     else{
-        $cresult = mysqli_query($conn, "SELECT * FROM patron_acc WHERE email = '$email'");
+        $cresult = mysqli_query($conn, "SELECT * FROM patron_acc WHERE email = '$email' AND status = '1'");
         $crow = mysqli_fetch_assoc($cresult);
 
         if(mysqli_num_rows($cresult) > 0){
@@ -42,6 +42,9 @@ if(isset($_POST["login"])){
                 $_SESSION["login"] = true;
 
                 header("Location: patron_landing.php");
+            }
+            else{
+                echo "<script> alert('Wrong Password'); </script>";
             }
         }
         else{
