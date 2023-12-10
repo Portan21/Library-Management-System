@@ -90,7 +90,7 @@ if(isset($_POST["ret"])){
             </li>
             
             <li class='nav-item'>
-            <a class='nav-link' href='attendance(librarians)-records.php'>Records</a>
+            <a class='nav-link active' aria-current='page' href='librarianprofiles-records.php'>Records</a>
             </li>";
 	    }
 
@@ -146,7 +146,7 @@ if(isset($_POST["ret"])){
 
                                         <div class="row qr-text d-flex justify-content-center">
                                             <div class="col-lg-12 d-flex justify-content-center">
-                                                <p id="qr-name" class="qr-sign"><?php echo $_SESSION["email"]; ?></p>
+                                                <p id="qr-name" class="qr-sign"><?php echo $_SESSION["name"]; ?></p>
                                             </div>
                                         </div>
 
@@ -219,7 +219,7 @@ if(isset($_POST["ret"])){
                                         FROM lib_attendance
                                         WHERE librarianID = '$accID'
                                         ORDER BY lib_attendanceID DESC
-                                        LIMIT 2;");
+                                        LIMIT 5;");
                                         while($row = mysqli_fetch_assoc($result)){
                                             $date = substr("$row[lib_entry]", 0, 10);
                                             $timeIN = substr("$row[lib_entry]", -8);
@@ -237,7 +237,7 @@ if(isset($_POST["ret"])){
                                         FROM patron_attendance
                                         WHERE patronID = '$accID'
                                         ORDER BY pt_attendanceID DESC
-                                        LIMIT 2;");
+                                        LIMIT 5;");
                                         while($row = mysqli_fetch_assoc($result)){
                                             $date = substr("$row[pt_entry]", 0, 10);
                                             $timeIN = substr("$row[pt_entry]", -8);

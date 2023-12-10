@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </li>
             
             <li class='nav-item'>
-            <a class='nav-link' href='attendance(librarians)-records.php'>Records</a>
+            <a class='nav-link active' aria-current='page' href='librarianprofiles-records.php'>Records</a>
             </li>";
 	    }
 

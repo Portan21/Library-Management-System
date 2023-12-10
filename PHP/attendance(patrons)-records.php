@@ -43,7 +43,7 @@ require 'config.php';
             </li>
             
             <li class='nav-item'>
-            <a class='nav-link active' aria-current='page' href='attendance(librarians)-records.php'>Records</a>
+            <a class='nav-link active' aria-current='page' href='librarianprofiles-records.php'>Records</a>
             </li>";
 	    }
 
@@ -60,12 +60,12 @@ require 'config.php';
     </div>
     </nav>
     <div class = "container py-4">
+    <button class="select btn btn-primary"><a class="nav-link" href="librarianprofiles-records.php">Librarian Profiles</a></button>
+    <button class="select btn btn-primary"><a class="nav-link" href="patronprofiles-records.php">Patron Profiles</a></button>
     <button class="select btn btn-primary"><a class="nav-link" href="attendance(librarians)-records.php">Attendance - Librarian</a></button>
     <button class="select btn btn-success"><a class="nav-link" href="attendance(patrons)-records.php">Attendance - Patron</a></button>
     <button class="select btn btn-primary"><a class="nav-link" href="returned-records.php">Returned Books</a></button>
     <button class="select btn btn-primary"><a class="nav-link" href="returnedwpenalty-records.php">Returned Books Penalty</a></button>
-    <button class="select btn btn-primary"><a class="nav-link" href="librarianprofiles-records.php">Librarian Profiles</a></button>
-    <button class="select btn btn-primary"><a class="nav-link" href="patronprofiles-records.php">Patron Profiles</a></button>
     <div class ="row">
     <h3 class="mb-4 mt-3 text-uppercase">Attendance - Patrons</h3>
     <table id="example" class="content-table" style="width:100%">
