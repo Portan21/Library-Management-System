@@ -183,7 +183,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <h1 class="text-uppercase">Account Management</h1>
                         <form action="" method="post" autocomplete="off">
                             <div class="mb-2 mt-2">
-                                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                                <label for="exampleInputEmail1" class="form-label">Email Address</label>
                                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo $_SESSION['email']; ?>" disabled>
                             </div>
 
