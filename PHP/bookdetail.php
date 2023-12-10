@@ -183,6 +183,50 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
         </div>
     </div>
+    
+    <div class="container mb-5">
+        <div class="row mt-5">
+            <h1 class="mt-2 text-decoration-none text-uppercase">Borrow History</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <?php
+                $result = mysqli_query($conn, "SELECT patron_acc.pt_name, borrow_date, return_date
+                    FROM returned_book
+                    JOIN patron_acc ON returned_book.patronID = patron_acc.patronID
+                    WHERE returned_book.bookID = $bookID
+                    ORDER BY returned_book.return_date DESC
+                    LIMIT 20;");
+
+                if (mysqli_num_rows($result) > 0) {
+                    // Display the table if there are borrow records
+                    echo '<table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th>Patron Name</th>
+                                    <th>Borrow Date</th>
+                                    <th>Return Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>';
+
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo '<tr>
+                                <td>' . $row['pt_name'] . '</td>
+                                <td>' . $row['borrow_date'] . '</td>
+                                <td>' . $row['return_date'] . '</td>
+                            </tr>';
+                    }
+
+                    echo '</tbody></table>';
+                } else {
+                    // Display a message if there are no borrow records
+                    echo '<p>No borrow records available.</p>';
+                }
+                ?>
+            </div>
+        </div>
+    </div>
 
     <script src = "https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src = "../JavaScript/app2.js"></script>

@@ -62,51 +62,54 @@ if(isset($_POST["ret"])){
     <title>Profile</title>
 </head>
 <body>
-<nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary shadow">
+
+<nav class="navbar sticky-top navbar-expand-lg">
     <div class="container-fluid">
         <a class="navbar-brand" href="landing.php">SCRIBE</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mb-lg-0 ms-auto">
+            <ul class="navbar-nav mb-lg-0 ms-auto">
 
-            <li class="nav-item">
-            <a class="nav-link" href="catalogs.php">Catalog</a>
-            </li>
-	    <?php
-	    if(!empty($_SESSION["typeID"])){
-	    echo"
-            <li class='nav-item'>
-            <a class='nav-link' href='request.php'>Request</a>
-            </li>
+                <li class="nav-item">
+                <a class="nav-link" href="catalogs.php">Catalog</a>
+                </li>
+            <?php
+            if(!empty($_SESSION["typeID"])){
+            echo"
+                <li class='nav-item'>
+                <a class='nav-link' href='request.php'>Request</a>
+                </li>
 
-            <li class='nav-item'>
-            <a class='nav-link' href='borrowed.php'>Borrowed</a>
-            </li>
+                <li class='nav-item'>
+                <a class='nav-link' href='borrowed.php'>Borrowed</a>
+                </li>
 
-            <li class='nav-item'>
-            <a class='nav-link' href='penalty.php'>Penalty</a>
-            </li>
-            
-            <li class='nav-item'>
-            <a class='nav-link' href='attendance(librarians)-records.php'>Records</a>
-            </li>";
-	    }
+                <li class='nav-item'>
+                <a class='nav-link' href='penalty.php'>Penalty</a>
+                </li>
+                
+                <li class='nav-item'>
+                <a class='nav-link' href='attendance(librarians)-records.php'>Records</a>
+                </li>";
+            }
 
-	    ?>
+            ?>
 
-            <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="profile.php">Profile</a>
-            </li>
+                <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="profile.php">Profile</a>
+                </li>
 
-            <li class="nav-item">
-            <a class="nav-link" href="logout.php">Logout</a>
-            </li>
-        </ul>
+                <li class="nav-item">
+                <a class="nav-link" href="logout.php">Logout</a>
+                </li>
+            </ul>
+        </div>
     </div>
-    </div>
-    </nav>
+</nav>
+
     <div class="container-fluid-profile">
         <div class="row profile">
 
