@@ -117,7 +117,8 @@ if(isset($_POST["ret"])){
                 <div class="profile-form profile-form-left col-lg-6 border-0 shadow">
                     <div class="col-lg-11 profile-frame">
                         <div class="col-lg-12">
-                            <p class="overview">Overview</p>
+                            <p class="overview">Overview <a href="#"><input class="edit-button" type="submit" value="Edit"></a> </p>
+                            
                             <hr>
                         </div>
                         <div class="row overview-row">
@@ -140,7 +141,7 @@ if(isset($_POST["ret"])){
                                 </p>
                                 <div class="col-lg-3">
                                 <a href='#'>
-                                <input class="view-button" type="submit" value="View QR">
+                                    <input class="view-button" type="submit" value="View QR">
                                 </a>
                                 </div>
                                 <div id="myModal" class="modal2">
@@ -195,6 +196,7 @@ if(isset($_POST["ret"])){
                                 ?>   
                                 </p>
                             </div>
+                            
                         </div>       
                     </div>
                 </div>
