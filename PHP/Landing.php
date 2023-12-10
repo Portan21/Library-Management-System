@@ -148,7 +148,7 @@
               <div class="hover-text">
                 <h4>QR Scanner</h4>
               </div>
-              <img src="..//Pictures/landing/manageacc.png" class="img-responsive" alt=" Title"> </a> </div>
+              <img src="..//Pictures/landing/scanqr.jpg" class="img-responsive" alt=" Title"> </a> </div>
           </div>
         </div>
       </div>
