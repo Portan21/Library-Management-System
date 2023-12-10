@@ -74,8 +74,7 @@ while($rowbdate = mysqli_fetch_assoc($bdateres)){
             <a class="nav-link" href="catalogs.php">Catalog</a>
             </li>
 	    <?php
-        $acctype = $_SESSION["typeID"];
-	    if($acctype != 4){
+	    if(!empty($_SESSION["typeID"])){
 	    echo"
             <li class='nav-item'>
             <a class='nav-link' href='approval.php'>Approval</a>
@@ -118,13 +117,11 @@ while($rowbdate = mysqli_fetch_assoc($bdateres)){
         </thead>
         <tbody>
             <?php
-                $result = mysqli_query($conn, "SELECT borrowID, a.first_name AS bf_name, a.last_name AS bl_name, ac.first_name AS lf_name, ac.last_name AS ll_name, book_name, deadline, bb.borrow_date AS borrow_date FROM borrowed_book bb
+                $result = mysqli_query($conn, "SELECT borrowID, a.pt_name AS bf_name, ac.name AS lf_name, book_name, deadline, bb.borrow_date AS borrow_date FROM borrowed_book bb
                 INNER JOIN book b on bb.bookID = b.bookID
-                INNER JOIN account a on bb.borrowerID = a.accountID
-                INNER JOIN account ac on bb.librarianID = ac.accountID
-                WHERE deadline < '$currentDateTime' AND bb.borrowerID = $id
-                ORDER BY deadline DESC
-                LIMIT 1");
+                INNER JOIN patron_acc a on bb.patronID = a.patronID
+                INNER JOIN lib_acc ac on bb.librarianID = ac.librarianID
+                WHERE deadline < '$currentDateTime'");
                 while($row = mysqli_fetch_assoc($result)){
                     $brwdate = new DateTime($row["borrow_date"]);
                     

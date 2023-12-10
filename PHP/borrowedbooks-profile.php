@@ -100,8 +100,7 @@ require 'config.php';
                     $result = mysqli_query($conn, "SELECT borrow_date,deadline,bookID
                     FROM borrowed_book
                     WHERE patronID = '$accID'
-                    ORDER BY borrow_date DESC
-                    LIMIT 2;");
+                    ORDER BY borrow_date DESC;");
 
                     while($row = mysqli_fetch_assoc($result)){
 

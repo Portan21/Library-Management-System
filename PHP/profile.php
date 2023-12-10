@@ -283,21 +283,19 @@ if(isset($_POST["ret"])){
                                     </thead>
                                     <tbody>";
                                         if(empty($_SESSION["typeID"])){   
-                                        }
-                                        else{
-                                            $accID = $_SESSION[accountID];
-                                            $result = mysqli_query($conn, 'SELECT borrow_date,deadline,bookID
+                                            $accID = $_SESSION["accountID"];
+                                            $result = mysqli_query($conn, "SELECT borrow_date,deadline,bookID
                                             FROM borrowed_book
-                                            WHERE patronID = "$accID"
+                                            WHERE patronID = '$accID'
                                             ORDER BY borrow_date DESC
-                                            LIMIT 2;');
+                                            LIMIT 2;");
 
                                             while($row = mysqli_fetch_assoc($result)){
 
-                                                $booknumber = $row[bookID];
-                                                $result2 = mysqli_query($conn, 'SELECT book_name
+                                                $booknumber = $row["bookID"];
+                                                $result2 = mysqli_query($conn, "SELECT book_name
                                                 FROM book
-                                                WHERE bookID = "$booknumber"');
+                                                WHERE bookID = '$booknumber';");
 
                                                 $row2 = mysqli_fetch_assoc($result2);
 
@@ -338,22 +336,20 @@ if(isset($_POST["ret"])){
                                 </thead>
                                 <tbody>';
 
-                                    $result = mysqli_query($conn, "SELECT borrowID, book_name, deadline, bb.borrow_date AS borrow_date FROM borrowed_book bb
-                                    INNER JOIN book b on bb.bookID = b.bookID
-                                    INNER JOIN lib_acc a on bb.librarianID = a.librarianID
-                                    INNER JOIN lib_acc ac on bb.librarianID = ac.librarianID
-                                    WHERE deadline < '$currentDateTime' AND bb.librarianID = $id
-                                    ORDER BY deadline DESC
-                                    LIMIT 1");
-                                    while($row = mysqli_fetch_assoc($result)){
-                                        $brwdate = new DateTime($row["borrow_date"]);
-                                        
-                                        $intrvl = $brwdate->diff($currentDate);
-                                        $mnt = $intrvl->y * 12 + $intrvl->m;
-                                        $dys = $intrvl->d;
-                        
-                                        $totday = ($mnt * 30) + $dys;
-                                        $totpen = $totday * 10;
+                                $result = mysqli_query($conn, "SELECT borrowID, a.pt_name AS bf_name, ac.name AS lf_name, book_name, deadline, bb.borrow_date AS borrow_date FROM borrowed_book bb
+                                INNER JOIN book b on bb.bookID = b.bookID
+                                INNER JOIN patron_acc a on bb.patronID = a.patronID
+                                INNER JOIN lib_acc ac on bb.librarianID = ac.librarianID
+                                WHERE deadline < '$currentDateTime'");
+                                while($row = mysqli_fetch_assoc($result)){
+                                    $brwdate = new DateTime($row["borrow_date"]);
+                                    
+                                    $intrvl = $brwdate->diff($currentDate);
+                                    $mnt = $intrvl->y * 12 + $intrvl->m;
+                                    $dys = $intrvl->d;
+                    
+                                    $totday = ($mnt * 30) + $dys;
+                                    $totpen = $totday * 10;
                                     echo "<tr>
                                         <td class='px-4 py-2 text-center'>$row[book_name]</td>
                                         <td class='px-4 py-2 text-center'>$totday days</td>
