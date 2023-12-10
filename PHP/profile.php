@@ -92,7 +92,7 @@ if(isset($_POST["ret"])){
                 </li>
                 
                 <li class='nav-item'>
-                <a class='nav-link' href='attendance(librarians)-records.php'>Records</a>
+                <a class='nav-link' href='librarianprofiles-records.php'>Records</a>
                 </li>";
             }
 
@@ -345,7 +345,8 @@ if(isset($_POST["ret"])){
                                 INNER JOIN book b on bb.bookID = b.bookID
                                 INNER JOIN patron_acc a on bb.patronID = a.patronID
                                 INNER JOIN lib_acc ac on bb.librarianID = ac.librarianID
-                                WHERE deadline < '$currentDateTime'");
+                                WHERE deadline < '$currentDateTime'
+                                AND a.patronID = '$accID'");
                                 while($row = mysqli_fetch_assoc($result)){
                                     $brwdate = new DateTime($row["borrow_date"]);
                                     
