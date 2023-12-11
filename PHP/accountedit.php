@@ -173,11 +173,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
     </nav>
 
-    <div class="container-fluid pd-5">
+    <div class="container-fluid">
         <div class="row pt-3"></div>
         <div class="row pt-5">
             <div class="col-md-3"></div>
-            <div class="col-md-6 mt-5 pt-5">
+            <div class="col-md-6 pt-5 mt-2">
                 <div class="card">
                     <div class="card-body">
                         <h1 class="text-uppercase">Account Management</h1>
@@ -230,7 +230,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             ?>
 
                             <!-- Existing form fields... -->
-                            <div class="mb-2 form-check">
+                            <div class=" form-check">
                                 <input type="checkbox" class="form-check-input" id="changePasswordCheckbox" name="changePasswordCheckbox">
                                 <label class="form-check-label" for="changePasswordCheckbox">Change Password</label>
                             </div>
