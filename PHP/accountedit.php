@@ -123,7 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" href="../CSS/register.css">
     <script defer src="../JavaScript/bootstrap.bundle.min.js"></script>
     <script defer src="../JavaScript/javascript.js"></script>
-    <title>Register</title>
+    <title>Account Management</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
@@ -174,7 +174,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
     </nav>
 
-    <div class="container-fluid-frame pd-5">
+    <div class="container-nav pd-5">
         <div class="row pt-3"></div>
         <div class="row pt-5">
             <div class="col-md-3"></div>

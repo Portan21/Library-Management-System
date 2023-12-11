@@ -68,10 +68,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="catalogs.php" class="page-scroll">Catalog</a></li>
-                    <li><a class='nav-link' href='attendance(librarians)-records.php'>Records</a></li>
                     <li><a href="request.php" class="page-scroll">Request</a></li>
                     <li><a href="borrowed.php" class="page-scroll">Borrowed</a></li>
                     <li><a href="penalty.php" class="page-scroll">Penalty</a></li>
+                    <li><a class='nav-link' href='librarianprofiles-records.php'>Records</a></li>
                     <li><a href="profile.php" class="page-scroll">Profile</a></li>
                     <li><a href="logout.php" class="page-scroll">Log Out</a></li>
                 </ul>

@@ -225,7 +225,7 @@ if(isset($_POST["ret"])){
                                         FROM lib_attendance
                                         WHERE librarianID = '$accID'
                                         ORDER BY lib_attendanceID DESC
-                                        LIMIT 5;");
+                                        LIMIT 3;");
                                         while($row = mysqli_fetch_assoc($result)){
                                             $date = substr("$row[lib_entry]", 0, 10);
                                             $timeIN = substr("$row[lib_entry]", -8);
@@ -243,7 +243,7 @@ if(isset($_POST["ret"])){
                                         FROM patron_attendance
                                         WHERE patronID = '$accID'
                                         ORDER BY pt_attendanceID DESC
-                                        LIMIT 5;");
+                                        LIMIT 3;");
                                         while($row = mysqli_fetch_assoc($result)){
                                             $date = substr("$row[pt_entry]", 0, 10);
                                             $timeIN = substr("$row[pt_entry]", -8);
