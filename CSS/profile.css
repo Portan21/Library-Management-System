@@ -23,11 +23,15 @@
 }
 
 .profile-form-left{
+    height: auto;
     margin-right: 1%;
+    padding-bottom: 15px;
 }
 
 .profile-form-right{
+    height: auto;
     margin-left: 1%;
+    padding-bottom: 15px;
 }
 
 .profile-frame{
