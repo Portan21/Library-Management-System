@@ -179,7 +179,7 @@ require 'config.php';
                             <td class='px-4 py-2 text-center'>$row[librarianID]</td>
                             <td class='px-4 py-2 text-center'>$row[name]</td>
                             <td class='px-4 py-2 text-center'>$row[email]</td>
-                            <td class='px-4 py-2 text-center'>$row[nametype]</td>
+                            <td class='px-4 py-2 text-center'><button id='typeButton$row[librarianID]' onmouseover='typehover($row[librarianID])' onmouseout='typehoverOut($row[librarianID])' onclick='changetype($row[librarianID])' class='select btn btn-warning'>$row[nametype]</td>
                             <td class='px-4 py-2 text-center'><button id='statusButton$row[librarianID]' onmouseover='hover($row[librarianID])' onmouseout='hoverOut($row[librarianID])' onclick='changeStatus($row[librarianID])' class='select btn btn-success'>Enabled</button></td>
                         </tr>";
                     }
@@ -188,7 +188,7 @@ require 'config.php';
                             <td class='px-4 py-2 text-center'>$row[librarianID]</td>
                             <td class='px-4 py-2 text-center'>$row[name]</td>
                             <td class='px-4 py-2 text-center'>$row[email]</td>
-                            <td class='px-4 py-2 text-center'>$row[nametype]</td>
+                            <td class='px-4 py-2 text-center'><button id='typeButton$row[librarianID]' onmouseover='typehover($row[librarianID])' onmouseout='typehoverOut($row[librarianID])' onclick='changetype($row[librarianID])' class='select btn btn-warning'>$row[nametype]</td>
                             <td class='px-4 py-2 text-center'><button id='statusButton$row[librarianID]' onmouseover='hover($row[librarianID])' onmouseout='hoverOut($row[librarianID])' onclick='changeStatus($row[librarianID])' class='select btn btn-danger'>Disabled</button></td>
                         </tr>";
                     }
@@ -227,6 +227,7 @@ require 'config.php';
     <script src = "https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src = "https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src = "../JavaScript/accountStatus - librarian.js"></script>
+    <script src = "../JavaScript/changetype.js"></script>
     <script src = "../JavaScript/app2.js"></script>
 </body>
 </html>
