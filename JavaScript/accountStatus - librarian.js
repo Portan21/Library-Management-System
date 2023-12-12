@@ -1,8 +1,15 @@
+var verify;
+
 function changeStatus(librarianID){
 
     let status = document.getElementById("statusButton" + librarianID);
 
-    var verify = confirm("Are you sure?");
+    if(status.innerHTML == "Disable"){
+        verify = confirm("Are you sure you want to Disable the account?");
+    }
+    else{
+        verify = confirm("Are you sure you want to Enable the account?");
+    }
 
     if(verify){
         $.ajax({
