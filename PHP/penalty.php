@@ -98,11 +98,11 @@ if(isset($_POST["ret"])){
             </li>
 
             <li class='nav-item'>
-            <a class='nav-link active' href='penalty.php'>Penalty</a>
+            <a class='nav-link active' aria-current='page' href='penalty.php'>Penalty</a>
             </li>
             
             <li class='nav-item'>
-            <a class='nav-link active' aria-current='page' href='librarianprofiles-records.php'>Records</a>
+            <a class='nav-link' href='librarianprofiles-records.php'>Records</a>
             </li>";
 	    }
 

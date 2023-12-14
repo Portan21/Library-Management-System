@@ -54,7 +54,7 @@ if($_SESSION["typeID"] == 4){
 	    if($acctype != 4){
 	    echo"
             <li class='nav-item'>
-            <a class='nav-link active' href='request.php'>Request</a>
+            <a class='nav-link active' aria-current='page' href='request.php'>Request</a>
             </li>
 
             <li class='nav-item'>
@@ -66,7 +66,7 @@ if($_SESSION["typeID"] == 4){
             </li>
             
             <li class='nav-item'>
-            <a class='nav-link active' aria-current='page' href='librarianprofiles-records.php'>Records</a>
+            <a class='nav-link'  href='librarianprofiles-records.php'>Records</a>
             </li>";
 	    }
 

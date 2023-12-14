@@ -1,11 +1,11 @@
 <?php
+require 'config.php';
+
 date_default_timezone_set('Asia/Manila'); // Set the time zone to Philippines
 $currentDateTime = date('Y-m-d H:i:s');
 
 date_default_timezone_set('Asia/Manila'); // Set the time zone to Philippines
 $currentDate = new DateTime();
-
-$conn = mysqli_connect("scribelibrary.mysql.database.azure.com", "scribeproject", "Adminako123!", "scribelibrary");
 
 $accID = $_POST['email'];
 

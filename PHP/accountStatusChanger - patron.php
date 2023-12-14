@@ -1,5 +1,5 @@
 <?php
-$conn = mysqli_connect("scribelibrary.mysql.database.azure.com", "scribeproject", "Adminako123!", "scribelibrary");
+require 'config.php';
 
 $ID = $_POST['ID'];
 

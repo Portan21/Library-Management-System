@@ -75,7 +75,7 @@ if(isset($_POST["ret"])){
             </li>
 
             <li class='nav-item'>
-            <a class='nav-link active' href='borrowed.php'>Borrowed</a>
+            <a class='nav-link active' aria-current='page' href='borrowed.php'>Borrowed</a>
             </li>
 
             <li class='nav-item'>
@@ -83,7 +83,7 @@ if(isset($_POST["ret"])){
             </li>
             
             <li class='nav-item'>
-            <a class='nav-link active' aria-current='page' href='librarianprofiles-records.php'>Records</a>
+            <a class='nav-link'  href='librarianprofiles-records.php'>Records</a>
             </li>";
 	    }
 

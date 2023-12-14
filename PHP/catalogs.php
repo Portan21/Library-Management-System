@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <ul class="navbar-nav mb-lg-0 ms-auto">
 
             <li class="nav-item">
-            <a class="nav-link active" href="catalogs.php">Catalog</a>
+            <a class="nav-link active" aria-current='page' href="catalogs.php">Catalog</a>
             </li>
 	    <?php
 	    if(!empty($_SESSION["typeID"])){
@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </li>
             
             <li class='nav-item'>
-            <a class='nav-link active' aria-current='page' href='librarianprofiles-records.php'>Records</a>
+            <a class='nav-link' href='librarianprofiles-records.php'>Records</a>
             </li>";
 	    }
 
