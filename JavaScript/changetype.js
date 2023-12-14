@@ -20,26 +20,30 @@ function changetype(librarianID){
                 ID : librarianID
             },
             success : function (result) {
-            console.log (result);
-            console.log('Nice');
+                if(result.trim().includes("You can set 1 Head Librarian only")){
+                    alert(result);
+                }
+                else{
+                    if(temp == "Head Librarian"){
+                        document.getElementById("typeButton" + librarianID).classList.add('btn-warning');
+                        temp = "Librarian";
+                        status.innerHTML = temp;
+                        console.log("Librarian");
+                    }
+                    else{
+                        document.getElementById("typeButton" + librarianID).classList.add('btn-warning');
+                        temp = "Head Librarian";
+                        status.innerHTML = temp;
+                        console.log("Head Librarian");
+                    }
+                }
             },
             error : function () {
-            console.log ('error');
+                console.log ('error');
             }
         });
 
-        if(temp == "Head Librarian"){
-            document.getElementById("typeButton" + librarianID).classList.remove('btn-danger');
-            document.getElementById("typeButton" + librarianID).classList.add('btn-success');
-            temp = "Librarian";
-            console.log("Librarian");
-        }
-        else{
-            document.getElementById("typeButton" + librarianID).classList.remove('btn-success');
-            document.getElementById("typeButton" + librarianID).classList.add('btn-danger');
-            temp = "Head Librarian";
-            console.log("Head Librarian");
-        }
+        
     }
 }
 
@@ -50,7 +54,7 @@ function typehover(librarianID){
     document.getElementById("typeButton" + librarianID).classList.add('btn-danger');
     temp = status.innerHTML;
     status.innerHTML = "Change Type";
-    console.log("Enter: still Enabled");
+    console.log("Hover In");
 }
 
 function typehoverOut(librarianID){
@@ -59,7 +63,7 @@ function typehoverOut(librarianID){
     document.getElementById("typeButton" + librarianID).classList.remove('btn-danger');
     document.getElementById("typeButton" + librarianID).classList.add('btn-warning');
     status.innerHTML = temp;
-    console.log("Exit: still Disabled");
+    console.log("Hover Out");
 }
 
 
